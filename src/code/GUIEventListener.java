@@ -50,8 +50,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		this.window = w;
 		this.eventSources = w.getSources();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		// JFileChooser first opens in default directory (My Documents or Unix
-		// home directory, usually)
+		// JFileChooser first opens in default directory (My Documents or Unix home directory, usually)
 		// Subsequent JFileChooser calls open in the previous directory
 	}
 
@@ -60,9 +59,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		if (e.getSource() == eventSources.get("importButton")) {
 			int returnVal = fileChooser.showOpenDialog(fileChooser);
 
-			if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us
-															// the current
-															// directory
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				String folderDir = fileChooser.getSelectedFile().toString();
 				((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
 				
@@ -143,9 +140,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	public void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			if (is != null) {
-				/*
-				 * is.rtps = null; is = null;
-				 */
+				// is.rtps = null; is = null;
 				System.exit(0);
 			}
 
@@ -166,12 +161,11 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 					window.songList.getLastVisibleIndex());
 			if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 				int index = window.songList.locationToIndex(e.getPoint());
-				// edge case: this has the same functionality as the import
-				// button
+				// edge case: this has the same functionality as the import button
 				if (window.songListModel.getElementAt(index).songName.equals("<Add some songs!>")) {
 					int returnVal = fileChooser.showOpenDialog(fileChooser);
 
-					if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us the current directory
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						String folderDir = fileChooser.getSelectedFile().toString();
 						((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
 
@@ -179,6 +173,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 					}
 				} else {
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
+					// TODO sync queue add
 				}
 			}
 		} else {
@@ -215,6 +210,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				window.songListModel.remove(0);
 			window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getAbsolutePath()));
 		}
+		
+		// TODO sync library add
 
 		File[] subdirs = new File(folderDir).listFiles(new FileFilter() {
 			public boolean accept(File file) {

@@ -80,24 +80,6 @@ public class Window extends JFrame {
 		topPanel.add(backButton);
 		topPanel.add(forwardButton);
 		
-		
-//		topPanel.setLayout(new BorderLayout());
-//		
-//		//Top Left Panel
-//		JPanel topLeft = new JPanel();
-//		topPanel.add(topLeft, BorderLayout.EAST);
-//		topLeft.add(myIPLabel);
-//		topLeft.add(streamButton);
-//		topLeft.add(rcvButton);
-//		
-//		//Top Right Panel
-//		JPanel topRight = new JPanel();
-//		topPanel.add(topRight, BorderLayout.WEST);
-//		topRight.add(playPauseButton);
-//		topRight.add(stopButton);
-//		topRight.add(backButton);
-//		topRight.add(forwardButton);
-		
 		//Create a split pane with the two scroll panes in it. Create the column headers.
 		JScrollPane songListPane = new JScrollPane(songList);
 		songListPane.setColumnHeaderView(songsLabel);
