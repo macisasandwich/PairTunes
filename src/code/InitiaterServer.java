@@ -24,6 +24,7 @@ public class InitiaterServer {
 			for (int i = 0; i <= 3; i++) {
 				timeDiff = new GregorianCalendar().getTimeInMillis() - Long.parseLong(in.readLine());
 				out.println(timeDiff);
+				System.out.println(timeDiff);
 			}
 			
 			System.out.println("Handshake received from server. Socket established!");
