@@ -97,8 +97,7 @@ public class RTPServer implements ControllerListener, Runnable {
 			rtpMgr.addTarget(destAddr);
 			sendStream = rtpMgr.createSendStream(pbds, 0);
 			sendStream.start();
-			System.err
-					.println("Created RTP session: " + ipAddress + " " + port);
+			System.err.println("Created RTP session: " + ipAddress + " " + port);
 			p.start();
 			// wait(offset);
 		} catch (Exception e) {
