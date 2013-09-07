@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
-import javax.media.Player;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
@@ -19,25 +18,25 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 
 	Map<String, Object> eventSources;
 	Window window;
-	Player player;
+	JFileChooser fileChooser = new JFileChooser();
 
 	public void setWindow(Window w) {
 		this.window = w;
 		this.eventSources = w.getSources();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		// TODO set default file directory for JFileChooser
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == eventSources.get("importButton")) {
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
 			int returnVal = fileChooser.showOpenDialog(fileChooser);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us the current directory
 				String folderDir = fileChooser.getSelectedFile().toString();
 				((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
-
+				
+				// TODO make this recursive so it will take in all song files even within subdirectories
 				File[] files = new File(folderDir).listFiles(new FilenameFilter() {
 					public boolean accept(File dir, String filename) {
 						return filename.endsWith(".wav") || filename.endsWith(".mp3");
@@ -47,7 +46,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				for (File file : files) {
 					if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
 						window.songListModel.remove(0);
-					window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath())); // TODO Add file path
+					window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath()));
 				}
 
 
@@ -57,7 +56,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				// InitiaterServer.startComm();
 
 				/*
-				 * Sam's IP = 172.16.200.239 Jesse's IP = 172.16.150.122
+				 * Sam's IP = 172.16.200.239
+				 * Jesse's IP = 172.16.150.122
 				 * Stephen's IP = 172.16.138.68
 				 */
 
@@ -94,15 +94,13 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				int index = window.songList.locationToIndex(e.getPoint());
 				// edge case: this has the same functionality as the import button
 				if (window.songListModel.getElementAt(index).songName.equals("<Add some songs!>")) {
-					JFileChooser fileChooser = new JFileChooser();
-					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
 					int returnVal = fileChooser.showOpenDialog(fileChooser);
 
 					if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us the current directory
 						String folderDir = fileChooser.getSelectedFile().toString();
 						((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
-
+						
+						// TODO make this recursive so it will take in all song files even within subdirectories
 						File[] files = new File(folderDir).listFiles(new FilenameFilter() {
 							public boolean accept(File dir, String filename) {
 								return filename.endsWith(".wav") || filename.endsWith(".mp3");
@@ -112,7 +110,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 						for (File file : files) {
 							if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
 								window.songListModel.remove(0);
-							window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath())); // TODO Add file path
+							window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath()));
 						}
 					}
 				} else {
@@ -123,8 +121,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			Rectangle r = window.queueList.getCellBounds(0, window.queueList.getLastVisibleIndex());
 			if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 				int index = window.queueList.locationToIndex(e.getPoint());
-				// TODO actually start broadcasting
-				// TODO let's print the directory of the thing
+				// TODO pass the directory of the song to the server and start broadcasting
 				System.out.println("Playing: " + window.queueModel.getElementAt(index));
 				System.out.println("file:///" + window.queueModel.getElementAt(index).filePath);
 			}
