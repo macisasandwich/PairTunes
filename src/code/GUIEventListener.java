@@ -51,9 +51,6 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            	window.songListModel.addElement(file.getName());
 	            }
 
-//	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
-//	            RTPClient.entry("172.16.150.122");
-
 //	            InitiaterServer.startComm();
 	            
 	            /* Sam's IP = 172.16.200.239
@@ -66,15 +63,15 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            int port1 = 42050;
 	            int port2 = 25000;
 	            
-	            //Uncomment the following if you are SERVING the music
-	            //temp testing to Sam's computer
+//	            Uncomment the following if you are SERVING the music
+//	            temp testing to Sam's computer
 //	            InitiaterClient ic = new InitiaterClient(samIP, port1);
 //	            ic.initiate();
 	            
-	            //Uncomment the following if you are RECEVING the music
-	            //temp testing to Jesse
-	            InitiaterServer is = new InitiaterServer(jesseIP, port1);
-	            is.initiate();
+//	            Uncomment the following if you are RECEVING the music
+//	            temp testing to Jesse
+	            //InitiaterServer is = new InitiaterServer(jesseIP, port1);
+	            //is.initiate();
 
 	        }
 		}

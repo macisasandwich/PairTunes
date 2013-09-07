@@ -49,7 +49,7 @@ public class Window extends JFrame {
 		queueList = new JList<String>(queueModel);
 		queueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		friendIPField = new JTextField(10);
-		friendIPLabel = new JLabel("Friend IP Address:");
+		friendIPLabel = new JLabel("Stream to IP Address:");
 		String ip = "Error";
 		try {
 			ip = InetAddress.getLocalHost().getHostAddress();
