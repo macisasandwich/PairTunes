@@ -53,11 +53,11 @@ public class InitiatingClient implements ControllerListener {
 		}
 		long networkDelay = new Date().getTime() - timeStamp;
 		
-		rtpc = new RTPClient(srcIP, this);
+		rtpc = new RTPClient(srcIP, this, port);
 		Thread t = new Thread(rtpc);
 		t.start();
 		try {
-			t.sleep(networkDelay * 8/9);
+			t.sleep(networkDelay * 7/8);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		

@@ -16,7 +16,7 @@ public class InitiatingServer {
 	String destinationIP;
 	int port;
 	long offsetTotal = 0, offset;
-	String songAddress = "file:///Users/theboss/Development/github/PairTunes/src/res/test.wav";
+	String songAddress;
 	PrintWriter out;
 	BufferedReader in;
 	RTPServer rtps;
@@ -69,7 +69,7 @@ public class InitiatingServer {
 		t.start();
 		
 		try {
-			if (in.readLine().equals("gogo")) {
+			if (in.readLine() != null) {
 				rtps.play();
 			}
 		} catch (IOException e) {

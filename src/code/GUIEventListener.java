@@ -35,7 +35,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		this.window = w;
 		this.eventSources = w.getSources();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		// TODO set default file directory for JFileChooser
+		// JFileChooser first opens in default directory (My Documents or Unix home directory, usually)
+		// Subsequent JFileChooser calls open in the previous directory
 	}
 
 	@Override
@@ -49,30 +50,11 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				
 				importMusic(folderDir);
 
-				// TODO have the top of queue be playing
-				// TODO song list and queue are synced between comps
-
-				// InitiaterServer.startComm();
-
-				/*
-				 * Sam's IP = 172.16.200.239
-				 * Jesse's IP = 172.16.150.122
-				 * Stephen's IP = 172.16.138.68
-				 */
-
 				String samIP = "172.16.200.239";
 				String jesseIP = "172.16.150.122";
 				String stephenIP = "172.16.138.68";
 				int port1 = 42050;
 				int port2 = 25000;
-
-				// Uncomment the following if you are SERVING the music
-				// temp testing to Sam's computer
-//				InitiaterClient ic = new InitiaterClient(samIP, port1);
-//				ic.initiate();
-
-				// Uncomment the following if you are RECEVING the music
-				// temp testing to Jesse
 			}
 		} else if(e.getSource() == window.streamButton) {
 			ipFrame = new JFrame("Select IP Addresses");
