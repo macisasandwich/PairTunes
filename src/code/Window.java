@@ -29,7 +29,7 @@ public class Window extends JFrame {
 		//Set up GUI components
 		importButton = new JButton("Import Folder");
 		displaySong = new JTextField();
-		songList = new JList<String>( new String[] {"<Add some songs!>", "absdhaosid"} );
+		songList = new JList<String>( new String[] {"<Add some songs!>"} );
 		friendIPField = new JTextField(10);
 		friendIPLabel = new JLabel("Friend IP Address:");
 		String ip = "Error";
@@ -46,14 +46,13 @@ public class Window extends JFrame {
 		JPanel topPanel = new JPanel();
 		add(topPanel, BorderLayout.NORTH);
 		JPanel topRightPanel = new JPanel();
-		JScrollPane centerPanel = new JScrollPane();
-		add(centerPanel, BorderLayout.CENTER);
+		
+		add(songList, BorderLayout.CENTER);
 		
 		topPanel.add(myIPLabel);
 		topPanel.add(topRightPanel);
 		topRightPanel.add(friendIPLabel);
 		topRightPanel.add(friendIPField);
-		centerPanel.add(songList);
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);

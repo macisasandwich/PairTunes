@@ -18,7 +18,12 @@ import java.io.FilenameFilter;
 public class GUIEventListener implements ActionListener, ControllerListener {
 
 	Map<String, Object> eventSources;
+	Window window;
 	Player player;
+	
+	public void setWindow(Window w) {
+		this.window = w;
+	}
 	
 	public void setSources(Map<String, Object> eventSources) {
 		this.eventSources = eventSources;
@@ -40,20 +45,12 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            	    { return filename.endsWith(".wav") || filename.endsWith(".mp3"); }
 	            } );
 	            
-	            //TODO create a JTextArea of all the songs in the directory
+	            for (File file: files) {
+	            	System.out.println(file.getName());
+	            }
 	            
-	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
-	            //this is the local media player that we no longer use
-//	            try {
-//	            	//Creates player, starts stream from file (plays song)
-//	            	//.wav format only
-//					player = Manager.createPlayer(new URL("file:///" + singleFile));
-//					player.addControllerListener(this);
-//					player.start();
-//				} catch (Exception x) {
-//					System.out.println(x);
-//				}
-	            
+//	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
+//	            RTPClient.entry("172.16.150.122");
 	        }
 		}
 	}
