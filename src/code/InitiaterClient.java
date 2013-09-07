@@ -11,29 +11,13 @@ import java.util.GregorianCalendar;
 // It initiates the socket AND the music
 // It sends the music
 
-public class InitiaterClient implements Runnable {
-	String destinationIP;
-	int port;
+public class InitiaterClient{
+	String destinationIP = "172.16.200.239";
+	int port = 42050;
 	long offsetTotal;
 	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav";
 	
-	public static void initiate(String destinationIP, int port) {
-		InitiaterClient ini = new InitiaterClient(destinationIP, port);
-		Thread t = new Thread(ini);
-		t.start();
-	}
-	
-	public InitiaterClient(String destinationIP, int port) {
-		this.destinationIP = destinationIP;
-		this.port = port;
-	}
-	
-	public void run() {
-		this.setup();
-		RTPServer.entry(destinationIP, songAddress, offsetTotal, port);
-	}
-	
-	private void setup() {
+	public void initiate() {
 		Socket client;
 		try {
 			client = new Socket(InetAddress.getByName(destinationIP), port);
@@ -52,6 +36,8 @@ public class InitiaterClient implements Runnable {
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
+		
+		RTPServer.entry(destinationIP, songAddress, offsetTotal, port);
 	}
 	
 	
