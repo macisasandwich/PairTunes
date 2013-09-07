@@ -31,6 +31,7 @@ public class InitiaterServer {
 			
 			offsetTotal /= 4;
 
+			System.out.println(offsetTotal);
 			System.out.println("Handshake received from server. Socket established!");
 			RTPClient.entry("172.16.150.122", offsetTotal);
 		} catch (Exception x) {

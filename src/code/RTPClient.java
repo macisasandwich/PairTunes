@@ -37,7 +37,8 @@ public class RTPClient implements ControllerListener, Runnable {
 		try {
 			p = Manager.createPlayer(src);
 			p.addControllerListener(this);
-			wait(offset);
+			System.out.println(offset);
+			//wait(offset);
 			p.start();
 		} catch (Exception e) {
 			e.printStackTrace();

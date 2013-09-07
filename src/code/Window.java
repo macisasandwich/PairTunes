@@ -1,6 +1,7 @@
 package code;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
@@ -61,10 +63,22 @@ public class Window extends JFrame {
 		add(topPanel, BorderLayout.NORTH);
 		JPanel topRightPanel = new JPanel();
 		
-		JPanel centerPanel = new JPanel();
-		centerPanel.add(new JScrollPane(songList), BorderLayout.WEST);
-		centerPanel.add(new JScrollPane(queueList), BorderLayout.EAST);
-		add(centerPanel, BorderLayout.CENTER);
+		//TODO have the list labels on top of each half
+		
+		//Create a split pane with the two scroll panes in it.
+		JScrollPane songListPane = new JScrollPane(songList);
+		JScrollPane queueListPane = new JScrollPane(queueList);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
+											  songListPane, 
+											  queueListPane);
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setDividerLocation(380);
+
+		//Provide minimum sizes for the two components in the split pane
+		Dimension minimumSize = new Dimension(100, 50);
+		songListPane.setMinimumSize(minimumSize);
+		queueListPane.setMinimumSize(minimumSize);
+		add(splitPane, BorderLayout.CENTER);
 		
 		topPanel.add(myIPLabel);
 		topPanel.add(topRightPanel);
@@ -73,7 +87,7 @@ public class Window extends JFrame {
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);
-		setSize(1000,500);
+		setSize(800,500);
 		setVisible(true);
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
