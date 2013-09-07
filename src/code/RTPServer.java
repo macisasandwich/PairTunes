@@ -190,11 +190,11 @@ public class RTPServer implements ControllerListener, Runnable {
 	Player pl;
 	MediaLocator src;
 	
-	public static void entry(String destIP, String songAddress, long offset, int port) {
+	/*public static void entry(String destIP, String songAddress, long offset, int port) {
 		RTPServer rtp = new RTPServer(destIP, songAddress, offset, port);
 		Thread t = new Thread(rtp);
 		t.start();
-	}
+	}*/
 
 	public RTPServer(String destIP, String song, long offset, int port) {
 		Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
