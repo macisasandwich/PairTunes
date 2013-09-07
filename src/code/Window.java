@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame {
@@ -46,6 +47,7 @@ public class Window extends JFrame {
 		queueLabel = new JLabel("Queue:");
 		queueModel = new DefaultListModel<String>();
 		queueList = new JList<String>(queueModel);
+		queueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		friendIPField = new JTextField(10);
 		friendIPLabel = new JLabel("Friend IP Address:");
 		String ip = "Error";
@@ -63,11 +65,11 @@ public class Window extends JFrame {
 		add(topPanel, BorderLayout.NORTH);
 		JPanel topRightPanel = new JPanel();
 		
-		//TODO have the list labels on top of each half
-		
-		//Create a split pane with the two scroll panes in it.
+		//Create a split pane with the two scroll panes in it. Create the column headers.
 		JScrollPane songListPane = new JScrollPane(songList);
+		songListPane.setColumnHeaderView(songsLabel);
 		JScrollPane queueListPane = new JScrollPane(queueList);
+		queueListPane.setColumnHeaderView(queueLabel);
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
 											  songListPane, 
 											  queueListPane);
@@ -108,11 +110,10 @@ public class Window extends JFrame {
 		    	Rectangle r = songList.getCellBounds(0, songList.getLastVisibleIndex());
 		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 		    		int index = songList.locationToIndex(e.getPoint());
+		    		//edge case: we only do something if it's not the default non-song message
 		    		if (!songListModel.getElementAt(index).equals("<Add some songs!>")) {
-		    			//edge case: we only do something if it's not the default non-song message
+		    			queueModel.addElement(songListModel.getElementAt(index));
 		    		}
-		    		//TODO stop printing to console and actually do something with the selected song
-		    		System.out.println("Double clicked on Item " + (index+1) + ", " + songListModel.getElementAt(index));
 		    	}
 		    }
 		};
