@@ -69,13 +69,13 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 
 				// Uncomment the following if you are SERVING the music
 				// temp testing to Sam's computer
-				 //InitiaterClient ic = new InitiaterClient(samIP, port1);
-				 //ic.initiate();
+//				InitiaterClient ic = new InitiaterClient(samIP, port1);
+//				ic.initiate();
 
 				// Uncomment the following if you are RECEVING the music
 				// temp testing to Jesse
-				InitiatingClient is = new InitiatingClient(jesseIP, port1);
-				is.initiate();
+//				InitiatingClient is = new InitiatingClient(jesseIP, port1);
+//				is.initiate();
 
 			}
 		}
