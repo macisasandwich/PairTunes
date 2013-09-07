@@ -9,7 +9,11 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Map;
+
 import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
 import javax.media.EndOfMediaEvent;
@@ -159,8 +163,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == window.songList) {
-			Rectangle r = window.songList.getCellBounds(0,
-					window.songList.getLastVisibleIndex());
+			Rectangle r = window.songList.getCellBounds(0, window.songList.getLastVisibleIndex());
 			if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 				int index = window.songList.locationToIndex(e.getPoint());
 				// edge case: this has the same functionality as the import button
@@ -201,16 +204,24 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	}
 
 	public void importMusic(String folderDir) {
+		
 		File[] files = new File(folderDir).listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String filename) {
 				return filename.endsWith(".wav") || filename.endsWith(".mp3");
 			}
 		});
-
+		
+		ArrayList<SongTuple<String, String, String, Integer>> tupleList = new ArrayList<SongTuple<String, String, String, Integer>>();
+		
 		for (File file : files) {
 			if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
 				window.songListModel.remove(0);
-			window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getAbsolutePath()));
+			try {
+				window.songListModel.addElement(new SongTuple<String, String, String, Integer>(file.getName(), file.getAbsolutePath(), InetAddress.getLocalHost().getHostAddress(), 90000));
+				tupleList.add(new SongTuple<String, String, String, Integer>(file.getName(), file.getAbsolutePath(), InetAddress.getLocalHost().getHostAddress(), 90000));
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		// TODO sync library add

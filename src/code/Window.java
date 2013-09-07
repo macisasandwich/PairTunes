@@ -25,8 +25,8 @@ public class Window extends JFrame {
 	JButton importButton, streamButton, rcvButton, playPauseButton, stopButton, backButton, forwardButton;
 	JTextField displaySong, friendIPField;
 	JLabel myIPLabel, friendIPLabel, songsLabel, queueLabel;
-	DefaultListModel<SongTuple<String, String>> songListModel, queueModel;
-	JList<SongTuple<String, String>> songList, queueList;
+	DefaultListModel<SongTuple<String, String, String, Integer>> songListModel, queueModel;
+	JList<SongTuple<String, String, String, Integer>> songList, queueList;
 	GUIEventListener eventListener;
 	
 	public Window(GUIEventListener listener) {
@@ -37,13 +37,13 @@ public class Window extends JFrame {
 		
 		//Middle scrolling panel stuff
 		songsLabel = new JLabel("Songs:");
-		songListModel = new DefaultListModel<SongTuple<String, String>>();
-		songListModel.addElement(new SongTuple<String, String>("<Add some songs!>", "N/A"));
-		songList = new JList<SongTuple<String, String>>(songListModel);
+		songListModel = new DefaultListModel<SongTuple<String, String, String, Integer>>();
+		songListModel.addElement(new SongTuple<String, String, String, Integer>("<Add some songs!>", "N/A", null, null));
+		songList = new JList<SongTuple<String, String, String, Integer>>(songListModel);
 		songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		queueLabel = new JLabel("Queue:");
-		queueModel = new DefaultListModel<SongTuple<String, String>>();
-		queueList = new JList<SongTuple<String, String>>(queueModel);
+		queueModel = new DefaultListModel<SongTuple<String, String, String, Integer>>();
+		queueList = new JList<SongTuple<String, String, String, Integer>>(queueModel);
 		queueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		//IP stuff
@@ -85,9 +85,7 @@ public class Window extends JFrame {
 		songListPane.setColumnHeaderView(songsLabel);
 		JScrollPane queueListPane = new JScrollPane(queueList);
 		queueListPane.setColumnHeaderView(queueLabel);
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
-											  songListPane, 
-											  queueListPane);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, songListPane, queueListPane);
 		splitPane.setOneTouchExpandable(true);
 		splitPane.setDividerLocation(460);
 
