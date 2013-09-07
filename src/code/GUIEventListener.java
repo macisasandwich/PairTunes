@@ -73,8 +73,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			submit = new JButton("Submit");
 			JPanel j = new JPanel();
 			JPanel x = new JPanel();
-			l1 = new JLabel("IP 1:");
-			l2 = new JLabel("IP 2:");
+			l1 = new JLabel("IP 1 (Sam):");
+			l2 = new JLabel("IP 2 (Stephen):");
 			ip1 = new JTextField(samIP, 10);
 			ip2 = new JTextField(stephenIP, 10);
 			x.setLayout(new BorderLayout());
@@ -97,8 +97,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			rSubmit = new JButton("Submit");
 			JPanel j = new JPanel();
 			JPanel x = new JPanel();
-			l1 = new JLabel("IP 1:");
-			ip1 = new JTextField(10);
+			l1 = new JLabel("IP 1 (Jesse):");
+			ip1 = new JTextField(jesseIP, 10);
 			x.setLayout(new BorderLayout());
 			j.add(l1);
 			j.add(ip1);
