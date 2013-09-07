@@ -45,9 +45,9 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				});
 
 				for (File file : files) {
-					if (window.songListModel.getElementAt(0).equals("<Add some songs!>"))
+					if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
 						window.songListModel.remove(0);
-					window.songListModel.addElement(file.getName());
+					window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath())); // TODO Add file path
 				}
 
 				// TODO have the top of queue be playing
@@ -92,7 +92,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 				int index = window.songList.locationToIndex(e.getPoint());
 				// edge case: we only add to queue if it's not the default non-song message
-				if (!window.songListModel.getElementAt(index).equals("<Add some songs!>")) {
+				if (!window.songListModel.getElementAt(index).songName.equals("<Add some songs!>")) {
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
 				}
 			}
@@ -103,6 +103,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				// TODO actually start broadcasting
 				// TODO let's print the directory of the thing
 				System.out.println("Playing: " + window.queueModel.getElementAt(index));
+				System.out.println("file:///" + window.queueModel.getElementAt(index).filePath);
 			}
 		}
 	}

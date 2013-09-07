@@ -25,8 +25,8 @@ public class Window extends JFrame {
 	JButton importButton;
 	JTextField displaySong, friendIPField;
 	JLabel myIPLabel, friendIPLabel, songsLabel, queueLabel;
-	DefaultListModel<String> songListModel, queueModel;
-	JList<String> songList, queueList;
+	DefaultListModel<SongTuple<String, String>> songListModel, queueModel;
+	JList<SongTuple<String, String>> songList, queueList;
 	GUIEventListener eventListener;
 	
 	public Window(GUIEventListener listener) {
@@ -35,13 +35,13 @@ public class Window extends JFrame {
 		importButton = new JButton("Import Folder");
 		displaySong = new JTextField();
 		songsLabel = new JLabel("Songs:");
-		songListModel = new DefaultListModel<String>();
-		songListModel.addElement("<Add some songs!>");
-		songList = new JList<String>(songListModel);
+		songListModel = new DefaultListModel<SongTuple<String, String>>();
+		songListModel.addElement(new SongTuple<String, String>("<Add some songs!>", "N/A"));
+		songList = new JList<SongTuple<String, String>>(songListModel);
 		songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		queueLabel = new JLabel("Queue:");
-		queueModel = new DefaultListModel<String>();
-		queueList = new JList<String>(queueModel);
+		queueModel = new DefaultListModel<SongTuple<String, String>>();
+		queueList = new JList<SongTuple<String, String>>(queueModel);
 		queueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		friendIPField = new JTextField(10);
 		friendIPLabel = new JLabel("Stream to IP Address:");
