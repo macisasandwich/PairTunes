@@ -140,7 +140,9 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	public void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			if (is != null) {
-				// is.rtps = null; is = null;
+				is.out.write(1);
+				//is.rtps = null; 
+				//is = null;
 				System.exit(0);
 			}
 

@@ -71,6 +71,17 @@ public class InitiatingClient implements ControllerListener {
 			System.out.println("Sync complete. Ready to recieve transmisison.");
 			out.println("gogo");
 			rtpc.p.start();
+			
+			try {
+				while (in.read() != 1) {}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//rtpc = null;
+			//return;
+			System.exit(0);
 		}
 	}
 }
