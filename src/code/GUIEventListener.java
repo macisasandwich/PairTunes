@@ -20,8 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GUIEventListener implements ActionListener, ControllerListener,
-		MouseListener {
+public class GUIEventListener implements ActionListener, ControllerListener, MouseListener {
 
 	Map<String, Object> eventSources;
 	Window window;
