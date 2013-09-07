@@ -14,15 +14,14 @@ public class RTPServer implements ControllerListener, Runnable {
 	private String ipAddress;
 	Processor p;
 	MediaLocator src;
-
-	public static void main(String[] args) {
-		//TODO dynamically input songname and DESTINATION IP address
-		RTPServer rtp = new RTPServer("192.168.1.101", "04 - Blue.mp3");
+	
+	public static void entry(String destIP, String songAddress) {
+		RTPServer rtp = new RTPServer(destIP, songAddress);
 		Thread t = new Thread(rtp);
 		t.start();
 	}
 
-	public RTPServer(String ip, String song) {
+	public RTPServer(String destIP, String song) {
 		Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
 		Format input2 = new AudioFormat(AudioFormat.MPEG);
 		Format output = new AudioFormat(AudioFormat.LINEAR);
@@ -31,7 +30,7 @@ public class RTPServer implements ControllerListener, Runnable {
 		        new Format[]{input1, input2},
 		        new Format[]{output},
 		        PlugInManager.CODEC);
-		ipAddress = ip;
+		ipAddress = destIP;
 		//TODO dynamic paths
 		String srcFile = "Muzika\\" + song;
 		src = new MediaLocator("file:" + srcFile);
