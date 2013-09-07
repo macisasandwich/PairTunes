@@ -57,7 +57,7 @@ public class InitiatingClient implements ControllerListener {
 		Thread t = new Thread(rtpc);
 		t.start();
 		try {
-			t.sleep(networkDelay);
+			t.sleep(networkDelay * 8/9);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		
@@ -68,6 +68,7 @@ public class InitiatingClient implements ControllerListener {
 			System.exit(0);
 		} else if (evt instanceof PrefetchCompleteEvent) {		
 			System.out.println("Sync complete. Ready to recieve transmisison.");
+			out.println("gogo");
 			rtpc.p.start();
 		}
 	}

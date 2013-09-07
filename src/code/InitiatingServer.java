@@ -34,7 +34,7 @@ public class InitiatingServer{
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			
-			if (!in.readLine().equals("Start Sync")) {
+			if (!in.readLine().equals("sync")) {
 				System.out.println("Bad Server... Exiting...");
 				System.exit(1);
 			}
@@ -51,7 +51,7 @@ public class InitiatingServer{
 		t.start();
 		
 		try {
-			if (in.readLine().equals("Start Sync")) {
+			if (in.readLine().equals("gogo")) {
 				rtps.play();
 			}
 		} catch (IOException e) {
