@@ -87,9 +87,11 @@ public class Window extends JFrame {
 		    	Rectangle r = songList.getCellBounds(0, songList.getLastVisibleIndex());
 		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 		    		int index = songList.locationToIndex(e.getPoint());
-		    		System.out.println("Double clicked on Item " + index+1 + ", " + songListModel.getElementAt(index));
+		    		if (!songListModel.getElementAt(index).equals("<Add some songs!>")) {
+		    			//edge case: we only do something if it's not the default non-song message
+		    		}
 		    		//TODO stop printing to console and actually do something with the selected song
-		    		//TODO don't forget about the edge case with "<Add some songs!>"
+		    		System.out.println("Double clicked on Item " + (index+1) + ", " + songListModel.getElementAt(index));
 		    	}
 		    }
 		};
