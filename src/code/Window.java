@@ -104,13 +104,13 @@ public class Window extends JFrame {
 		eventSources.put("loadButton", importButton);
 		eventSources.put("displaySong", displaySong);
 		
-		//Set mouse listener
+		//Set mouse listener for songList
 		MouseListener mouseListener = new MouseAdapter() {
 		    public void mouseClicked(MouseEvent e) {
 		    	Rectangle r = songList.getCellBounds(0, songList.getLastVisibleIndex());
 		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 		    		int index = songList.locationToIndex(e.getPoint());
-		    		//edge case: we only do something if it's not the default non-song message
+		    		//edge case: we only add to queue if it's not the default non-song message
 		    		if (!songListModel.getElementAt(index).equals("<Add some songs!>")) {
 		    			queueModel.addElement(songListModel.getElementAt(index));
 		    		}
@@ -118,6 +118,22 @@ public class Window extends JFrame {
 		    }
 		};
 		songList.addMouseListener(mouseListener);
+		
+		//Set mouse listener for queueList
+		MouseListener queueMouseListener = new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		    	Rectangle r = queueList.getCellBounds(0, queueList.getLastVisibleIndex());
+		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
+		    		int index = queueList.locationToIndex(e.getPoint());
+		    		//TODO actually start broadcasting
+	    			System.out.println("Playing: " + queueModel.getElementAt(index));
+		    	}
+		    }
+		};
+		queueList.addMouseListener(queueMouseListener);
+		
+		//TODO have the top of queue be playing
+		//TODO song list and queue are synced between comps
 	}
 	
 	public Map<String, Object> getSources() {
