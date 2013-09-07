@@ -11,22 +11,40 @@ import java.net.Socket;
 // It initiates the socket AND the music
 // It sends the music
 
-public class InitiatingServer{
+public class InitiatingServer {
 	
 	String destinationIP;
 	int port;
 	long offsetTotal = 0, offset;
-	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\Somewhere I Belong.wav";
+	String songAddress = "file:///Users/theboss/Development/github/PairTunes/src/res/test.wav";
 	PrintWriter out;
 	BufferedReader in;
 	RTPServer rtps;
+	boolean stream;
 	
-	public InitiatingServer(String destinationIP, int port) {
+	public InitiatingServer(String destinationIP, int port, boolean stream, String song) {
 		this.destinationIP = destinationIP;
 		this.port = port;
+		this.stream = stream;
+		songAddress = song;
 	}
 	
 	public void initiate() {
+		if (stream) {
+			initiateStream();
+		} else {
+			initiateSelf();
+		}
+	}
+	
+	public void initiateSelf() {
+		rtps = new RTPServer(destinationIP, songAddress, port);
+		Thread t = new Thread(rtps);
+		t.start();
+		rtps.play();
+	}
+	
+	public void initiateStream() {
 		Socket client;
 		try {
 			System.out.println("Initiating Client Socket...");
