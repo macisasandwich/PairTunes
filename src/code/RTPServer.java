@@ -16,7 +16,7 @@ public class RTPServer implements ControllerListener, Runnable {
 	MediaLocator src;
 
 	public static void main(String[] args) {
-		//TODO dynamically input songname and IP address
+		//TODO dynamically input songname and DESTINATION IP address
 		RTPServer rtp = new RTPServer("192.168.1.101", "04 - Blue.mp3");
 		Thread t = new Thread(rtp);
 		t.start();
