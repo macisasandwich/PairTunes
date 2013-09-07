@@ -25,7 +25,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		this.window = w;
 		this.eventSources = w.getSources();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		// TODO set default file directory for JFileChooser
+		// JFileChooser first opens in default directory (My Documents or Unix home directory, usually)
+		// Subsequent JFileChooser calls open in the previous directory
 	}
 
 	@Override
@@ -63,8 +64,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 
 				// Uncomment the following if you are RECEVING the music
 				// temp testing to Jesse
-//				InitiatingClient is = new InitiatingClient(jesseIP, port1);
-//				is.initiate();
+				//InitiatingClient is = new InitiatingClient(jesseIP, port1);
+				//is.initiate();
 
 			}
 		}
