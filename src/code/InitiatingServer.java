@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 // It initiates the socket AND the music
 // It sends the music
 
-public class InitiaterClient{
+public class InitiatingServer{
 	
 	String destinationIP;
 	int port;
@@ -23,7 +23,7 @@ public class InitiaterClient{
 	BufferedReader in;
 	RTPServer rtps;
 	
-	public InitiaterClient(String destinationIP, int port) {
+	public InitiatingServer(String destinationIP, int port) {
 		this.destinationIP = destinationIP;
 		this.port = port;
 	}

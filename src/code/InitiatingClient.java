@@ -17,7 +17,7 @@ import java.util.Date;
 // This is the song receiver
 // THIS GOES SECOND
 
-public class InitiaterServer implements ControllerListener {
+public class InitiatingClient implements ControllerListener {
 	
 	PrintWriter out;
 	BufferedReader in;
@@ -26,7 +26,7 @@ public class InitiaterServer implements ControllerListener {
 	long offsetTotal;
 	RTPClient rtpc;
 	
-	public InitiaterServer(String srcIP, int port) {
+	public InitiatingClient(String srcIP, int port) {
 		this.srcIP = srcIP;
 		this.port = port;
 	}
@@ -40,9 +40,24 @@ public class InitiaterServer implements ControllerListener {
 			client = server.accept();
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			
-			out.println("Start Sync");
-			
+			System.out.println("Socket Established.");
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+		
+		out.println("Start Sync");
+		
+		rtpc = new RTPClient(srcIP, this);
+		Thread t = new Thread(rtpc);
+		t.start();
+		
+		
+	}
+	
+	public synchronized void controllerUpdate(ControllerEvent evt) {
+		if (evt instanceof EndOfMediaEvent) {
+			System.exit(0);
+		} else if (evt instanceof PrefetchCompleteEvent) {
 			System.out.println("Starting Sync...");
 			offsetTotal = 0;
 			//long timeDiff;			
@@ -57,26 +72,9 @@ public class InitiaterServer implements ControllerListener {
 			//offsetTotal /= 4;
 			
 			System.out.println("Sync value is: "+offsetTotal);
-		} catch (Exception x) {
-			x.printStackTrace();
-		}
-		
-		System.out.println("Sync complete. Ready to recieve transmisison.");
-		
-		rtpc = new RTPClient(srcIP, this);
-		Thread t = new Thread(rtpc);
-		t.start();
-		rtpc.p.start();
-	}
-	
-	public synchronized void controllerUpdate(ControllerEvent evt) {
-		if (evt instanceof EndOfMediaEvent) {
-			System.exit(0);
-		} //else if (evt instanceof PrefetchCompleteEvent) {
-			//out.println("Start Sync");
-			//rtpc.p.start();
-			//r.pl.start();
-		//} else {
+			System.out.println("Sync complete. Ready to recieve transmisison.");
+			rtpc.p.start();
+		}// else {
 		//	System.out.println(evt.toString());
 		//}
 	}
