@@ -58,11 +58,12 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            
 	            /* Sam's IP = 172.16.200.239
 	             * Jesse's IP = 172.16.150.122
-	             * Stephen's IP = 172.16.???.???
+	             * Stephen's IP = 172.16.138.68
 	             */
 	            
 	            String samIP = "172.16.200.239";
 	            String jesseIP = "172.16.150.122";
+	            String stephenIP = "172.16.138.68";
 	            int port1 = 42050;
 	            int port2 = 25000;
 	            

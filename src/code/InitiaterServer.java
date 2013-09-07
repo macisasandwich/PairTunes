@@ -12,6 +12,8 @@ import javax.media.ControllerListener;
 import javax.media.EndOfMediaEvent;
 import javax.media.PrefetchCompleteEvent;
 
+import java.util.Date;
+
 // This is the song receiver
 // THIS GOES SECOND
 
@@ -62,8 +64,24 @@ public class InitiaterServer implements ControllerListener {
 		if (evt instanceof EndOfMediaEvent) {
 			System.exit(0);
 		} else if (evt instanceof PrefetchCompleteEvent) {
+			out.println(new Date().getTime());
+			long delay = 0;
+			
+			try {
+				delay = Long.parseLong(in.readLine());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			out.println("GOGOGO");
-			out.println('c');
+			
+			try {
+				wait(delay);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//out.println("ccccccc");
 			rtpc.p.start();
 			//r.pl.start();
 		} else {

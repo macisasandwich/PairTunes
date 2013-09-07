@@ -1,10 +1,12 @@
 package code;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 // THIS GOES FIRST
@@ -16,7 +18,7 @@ public class InitiaterClient{
 	String destinationIP;
 	int port;
 	long offsetTotal, offset;
-	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav";
+	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\Somewhere I Belong.wav";
 	PrintWriter out;
 	BufferedReader in;
 	RTPServer rtps;
@@ -56,10 +58,17 @@ public class InitiaterClient{
 		t.start();
 		
 		try {
+			out.write(Long.toString(new Date().getTime() - Long.parseLong(in.readLine())));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
 			if (in.readLine().equals("GOGOGO")) {
 				rtps.play();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
