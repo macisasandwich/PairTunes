@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 // THIS GOES SECOND
 
 public class InitiaterServer {
-	public static void startComm() {
+	public static void startComm(RTPServer r) {
 		ServerSocket server;
 		Socket client;
 		long offsetTotal = 0;
@@ -32,7 +32,7 @@ public class InitiaterServer {
 			offsetTotal /= 4;
 
 			System.out.println("Handshake received from server. Socket established!");
-			RTPClient.entry("172.16.150.122", offsetTotal);
+			RTPClient.entry("172.16.150.122", offsetTotal, r);
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
