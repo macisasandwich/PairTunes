@@ -23,6 +23,8 @@ public class RTPClient implements ControllerListener, Runnable {
 		        new Format[]{input1, input2},
 		        new Format[]{output},
 		        PlugInManager.CODEC);
+		
+		//TODO not the port!
 		String srcUrl = "rtp://" + srcIP + ":42050/audio/1";
 		DataSink sink;
 		src = new MediaLocator(srcUrl);
