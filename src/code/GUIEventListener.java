@@ -30,15 +30,22 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 			int returnVal = fileChooser.showOpenDialog(fileChooser);
 
 	        if (returnVal == JFileChooser.APPROVE_OPTION) {							//Actually gives us the current directory
-	            ((JTextField) (eventSources.get("displaySong"))).setText(fileChooser.getSelectedFile().toString());
-	            try {
-	            	//Creates player, starts stream from file (plays song)
-					player = Manager.createPlayer(new URL("file:///Users/theboss/Music/test.wav"));
-					player.addControllerListener(this);
-					player.start();
-				} catch (Exception x) {
-					System.out.println(x);
-				}
+	        	String folderDir = fileChooser.getSelectedFile().toString();
+	            ((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
+	            //TODO create a JTextArea of all the songs in the directory
+	            
+	            
+	            //this is the local media player that we no longer use
+//	            try {
+//	            	//Creates player, starts stream from file (plays song)
+//	            	//.wav format only
+//					player = Manager.createPlayer(new URL("file:///" + singleFile));
+//					player.addControllerListener(this);
+//					player.start();
+//				} catch (Exception x) {
+//					System.out.println(x);
+//				}
+	            
 	        }
 		}
 	}
