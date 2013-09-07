@@ -9,9 +9,10 @@ public class InitiaterClient {
 		Socket client;
 		try {
             client = new Socket(InetAddress.getByName("172.16.150.122"), 42050);
+            System.out.println("GGG");
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
             //BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out.println("gon");
+            out.println("gonow");
             RTPServer.entry("172.16.150.122", "file:////Users/theboss/Development/github/PairTunes/src/res/test.wav");
 		} catch (Exception x) {
 			x.printStackTrace();

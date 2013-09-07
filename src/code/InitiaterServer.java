@@ -16,6 +16,7 @@ public class InitiaterServer {
 			//PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			in.readLine();
+			System.out.println("WON");
 			RTPClient.entry("172.16.138.68");
 		} catch (Exception x) {
 			x.printStackTrace();
