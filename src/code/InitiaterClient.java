@@ -39,7 +39,7 @@ public class InitiaterClient{
             	offsetTotal += offset;
             }
             
-            offsetTotal /= 3;  
+            offsetTotal /= 4;  
             
             System.out.println(offsetTotal);
             

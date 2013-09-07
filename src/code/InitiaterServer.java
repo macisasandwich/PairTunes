@@ -14,6 +14,7 @@ public class InitiaterServer {
 	public static void startComm() {
 		ServerSocket server;
 		Socket client;
+		long offsetTotal = 0;
 		try {
 			server = new ServerSocket(42050);
 			client = server.accept();
@@ -24,12 +25,14 @@ public class InitiaterServer {
 			for (int i = 0; i <= 3; i++) {
 				timeDiff = new GregorianCalendar().getTimeInMillis() - Long.parseLong(in.readLine());
 				out.println(timeDiff);
-
+				offsetTotal += timeDiff;
 				System.out.println(timeDiff);
 			}
+			
+			offsetTotal /= 4;
 
 			System.out.println("Handshake received from server. Socket established!");
-			RTPClient.entry("172.16.150.122");
+			RTPClient.entry("172.16.150.122", offsetTotal);
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
