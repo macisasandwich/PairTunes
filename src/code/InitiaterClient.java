@@ -12,10 +12,15 @@ import java.util.GregorianCalendar;
 // It sends the music
 
 public class InitiaterClient{
-	String destinationIP = "172.16.200.239";
-	int port = 42050;
+	String destinationIP;
+	int port;
 	long offsetTotal;
 	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav";
+	
+	public InitiaterClient(String destinationIP, int port) {
+		this.destinationIP = destinationIP;
+		this.port = port;
+	}
 	
 	public void initiate() {
 		Socket client;

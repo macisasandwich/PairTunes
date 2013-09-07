@@ -55,6 +55,8 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 //	            RTPClient.entry("172.16.150.122");
 	            
 //	            InitiaterClient.startComm();
+	            InitiaterClient i = new InitiaterClient("172.16.200.239", 42050);
+	            i.initiate();
 	        }
 		}
 	}
