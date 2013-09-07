@@ -17,6 +17,7 @@ public class RTPServer implements ControllerListener, Runnable {
 	Player pl;
 	MediaLocator src;
 	GUIEventListener GUIEL;
+	SendStream sendStream;
 
 	public RTPServer(String destIP, String song, int port, GUIEventListener gui) {
 		Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
@@ -85,7 +86,6 @@ public class RTPServer implements ControllerListener, Runnable {
 			PushBufferDataSource pbds = (PushBufferDataSource) output;
 			RTPManager rtpMgr = RTPManager.newInstance();
 			SessionAddress localAddr, destAddr;
-			SendStream sendStream;
 			// int port = 42050;
 			SourceDescription srcDesList[];
 			pl = Manager.createPlayer(src);
@@ -112,6 +112,11 @@ public class RTPServer implements ControllerListener, Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void stop() {
+		p.stop();
+		sendStream.close();
 	}
 
 	public synchronized void controllerUpdate(ControllerEvent evt) {
