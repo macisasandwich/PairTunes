@@ -17,6 +17,9 @@ public class InitiaterClient{
 	int port;
 	long offsetTotal, offset;
 	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav";
+	PrintWriter out;
+	BufferedReader in;
+	RTPServer rtps;
 	
 	public InitiaterClient(String destinationIP, int port) {
 		this.destinationIP = destinationIP;
@@ -28,8 +31,8 @@ public class InitiaterClient{
 		try {
 			client = new Socket(InetAddress.getByName(destinationIP), port);
 			System.out.println("Initiating Socket!");
-			PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			out = new PrintWriter(client.getOutputStream(), true);
+			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			offsetTotal = 0;
             
             for (int i = 0; i <= 3; i++) {
@@ -47,7 +50,18 @@ public class InitiaterClient{
 			x.printStackTrace();
 		}
 		
-		RTPServer.entry(destinationIP, songAddress, offsetTotal, port);
+		//RTPServer.entry(destinationIP, songAddress, offsetTotal, port);
+		rtps = new RTPServer(destinationIP, songAddress, offsetTotal, port);
+		Thread t = new Thread(rtps);
+		t.start();
+		
+		try {
+			if (in.readLine().equals("GOGOGO")) {
+				rtps.play();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

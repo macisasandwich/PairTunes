@@ -7,16 +7,15 @@ public class RTPClient implements ControllerListener, Runnable {
 
 	Player p;
 	MediaLocator src;
-	long offset;
-	RTPServer r;
+	ControllerListener mama;
 	
-	public static void entry(String srcIP, long offset, RTPServer r) {
-		RTPClient rtp = new RTPClient(srcIP, offset, r);
+	/*public static void entry(String srcIP, long offset, RTPServer r) {
+		RTPClient rtp = new RTPClient(srcIP);
 		Thread t = new Thread(rtp);
 		t.start();
-	}
+	}*/
 
-	public RTPClient(String srcIP, long offset, RTPServer r) {
+	public RTPClient(String srcIP, ControllerListener mom) {
 		Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
 		Format input2 = new AudioFormat(AudioFormat.MPEG);
 		Format output = new AudioFormat(AudioFormat.LINEAR);
@@ -26,8 +25,7 @@ public class RTPClient implements ControllerListener, Runnable {
 		        new Format[]{output},
 		        PlugInManager.CODEC);
 		
-		this.offset = offset;
-		this.r = r;
+		this.mama = mom;
 		
 		//TODO not the port!
 		String srcUrl = "rtp://" + srcIP + ":42050/audio/1";
@@ -38,7 +36,7 @@ public class RTPClient implements ControllerListener, Runnable {
 	public void run() {
 		try {
 			p = Manager.createPlayer(src);
-			p.addControllerListener(this);
+			p.addControllerListener(mama);
 			p.prefetch();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,7 +49,7 @@ public class RTPClient implements ControllerListener, Runnable {
 			System.exit(0);
 		} else if (evt instanceof PrefetchCompleteEvent) {
 			p.start();
-			r.pl.start();
+			//r.pl.start();
 		} else {
 			System.out.println(evt.toString());
 		}
