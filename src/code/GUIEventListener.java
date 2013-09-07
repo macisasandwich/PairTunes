@@ -28,7 +28,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == eventSources.get("loadButton")) {
+		if (e.getSource() == eventSources.get("importButton")) {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -91,8 +91,30 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			Rectangle r = window.songList.getCellBounds(0, window.songList.getLastVisibleIndex());
 			if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 				int index = window.songList.locationToIndex(e.getPoint());
-				// edge case: we only add to queue if it's not the default non-song message
-				if (!window.songListModel.getElementAt(index).songName.equals("<Add some songs!>")) {
+				// edge case: this has the same functionality as the import button
+				if (window.songListModel.getElementAt(index).songName.equals("<Add some songs!>")) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+					int returnVal = fileChooser.showOpenDialog(fileChooser);
+
+					if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us the current directory
+						String folderDir = fileChooser.getSelectedFile().toString();
+						((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
+
+						File[] files = new File(folderDir).listFiles(new FilenameFilter() {
+							public boolean accept(File dir, String filename) {
+								return filename.endsWith(".wav") || filename.endsWith(".mp3");
+							}
+						});
+
+						for (File file : files) {
+							if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
+								window.songListModel.remove(0);
+							window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath())); // TODO Add file path
+						}
+					}
+				} else {
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
 				}
 			}

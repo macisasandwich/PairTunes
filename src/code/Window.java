@@ -98,7 +98,7 @@ public class Window extends JFrame {
 		songList.addMouseListener(eventListener);
 		queueList.addMouseListener(eventListener);
 		eventSources = new HashMap<String, Object>();
-		eventSources.put("loadButton", importButton);
+		eventSources.put("importButton", importButton);
 		eventSources.put("displaySong", displaySong);
 	}
 	
