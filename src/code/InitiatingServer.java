@@ -16,7 +16,7 @@ public class InitiatingServer{
 	String destinationIP;
 	int port;
 	long offsetTotal = 0, offset;
-	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\Somewhere I Belong.wav";
+	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\IYAZ_-_Replay.aiff";
 	PrintWriter out;
 	BufferedReader in;
 	RTPServer rtps;
@@ -34,7 +34,7 @@ public class InitiatingServer{
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			
-			if (!in.readLine().equals("Start Sync")) {
+			if (!in.readLine().equals("sync")) {
 				System.out.println("Bad Server... Exiting...");
 				System.exit(1);
 			}
@@ -51,7 +51,7 @@ public class InitiatingServer{
 		t.start();
 		
 		try {
-			if (in.readLine().equals("Start Sync")) {
+			if (in.readLine() != null) {
 				rtps.play();
 			}
 		} catch (IOException e) {
