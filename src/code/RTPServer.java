@@ -111,6 +111,15 @@ public class RTPServer implements ControllerListener, Runnable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void play() {
+		try {
+			Player pl = Manager.createPlayer(src);
+			pl.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public synchronized void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof RealizeCompleteEvent) {
