@@ -32,7 +32,8 @@ public class RTPServer implements ControllerListener, Runnable {
 		        PlugInManager.CODEC);
 		ipAddress = destIP;
 		//TODO dynamic paths
-		String srcFile = "Muzika\\" + song;
+		String srcFile = "res\\" + song;
+		// \\\ is absolute reference ~\ is relaive reference
 		src = new MediaLocator("file:" + srcFile);
 
 	}
