@@ -40,15 +40,17 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	        if (returnVal == JFileChooser.APPROVE_OPTION) {							//Actually gives us the current directory
 	        	String folderDir = fileChooser.getSelectedFile().toString();
 	            ((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
+	            
 	            File[] files = new File(folderDir).listFiles(new FilenameFilter() {
 	            	public boolean accept(File dir, String filename) 
 	            	    { return filename.endsWith(".wav") || filename.endsWith(".mp3"); }
 	            } );
 	            
-	            for (File file: files) {
-	            	System.out.println(file.getName());
-	            }
+//	            for (File file: files) {
+//	            	System.out.println(file.getName());
+//	            }
 	            
+	            //TODO if songList is empty, clear the empty message
 
 //	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
 //	            RTPClient.entry("172.16.150.122");
