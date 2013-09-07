@@ -49,7 +49,7 @@ public class Window extends JFrame {
 		queueList = new JList<String>(queueModel);
 		queueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		friendIPField = new JTextField(10);
-		friendIPLabel = new JLabel("Friend IP Address:");
+		friendIPLabel = new JLabel("Stream to IP Address:");
 		String ip = "Error";
 		try {
 			ip = InetAddress.getLocalHost().getHostAddress();
@@ -100,40 +100,11 @@ public class Window extends JFrame {
 		//Register event listeners, add components to list of event sources to be passed to GUIEventListener
 		importButton.addActionListener(eventListener);
 		displaySong.addActionListener(eventListener);
+		songList.addMouseListener(eventListener);
+		queueList.addMouseListener(eventListener);
 		eventSources = new HashMap<String, Object>();
 		eventSources.put("loadButton", importButton);
 		eventSources.put("displaySong", displaySong);
-		
-		//Set mouse listener for songList
-		MouseListener mouseListener = new MouseAdapter() {
-		    public void mouseClicked(MouseEvent e) {
-		    	Rectangle r = songList.getCellBounds(0, songList.getLastVisibleIndex());
-		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
-		    		int index = songList.locationToIndex(e.getPoint());
-		    		//edge case: we only add to queue if it's not the default non-song message
-		    		if (!songListModel.getElementAt(index).equals("<Add some songs!>")) {
-		    			queueModel.addElement(songListModel.getElementAt(index));
-		    		}
-		    	}
-		    }
-		};
-		songList.addMouseListener(mouseListener);
-		
-		//Set mouse listener for queueList
-		MouseListener queueMouseListener = new MouseAdapter() {
-		    public void mouseClicked(MouseEvent e) {
-		    	Rectangle r = queueList.getCellBounds(0, queueList.getLastVisibleIndex());
-		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
-		    		int index = queueList.locationToIndex(e.getPoint());
-		    		//TODO actually start broadcasting
-	    			System.out.println("Playing: " + queueModel.getElementAt(index));
-		    	}
-		    }
-		};
-		queueList.addMouseListener(queueMouseListener);
-		
-		//TODO have the top of queue be playing
-		//TODO song list and queue are synced between comps
 	}
 	
 	public Map<String, Object> getSources() {
