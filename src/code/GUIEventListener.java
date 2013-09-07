@@ -12,6 +12,9 @@ import javax.media.Player;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
+import java.io.File;
+import java.io.FilenameFilter;
+
 public class GUIEventListener implements ActionListener, ControllerListener {
 
 	Map<String, Object> eventSources;
@@ -32,6 +35,11 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	        if (returnVal == JFileChooser.APPROVE_OPTION) {							//Actually gives us the current directory
 	        	String folderDir = fileChooser.getSelectedFile().toString();
 	            ((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
+	            File[] files = new File(folderDir).listFiles(new FilenameFilter() {
+	            	public boolean accept(File dir, String filename) 
+	            	    { return filename.endsWith(".wav") || filename.endsWith(".mp3"); }
+	            } );
+	            
 	            //TODO create a JTextArea of all the songs in the directory
 	            
 	            
