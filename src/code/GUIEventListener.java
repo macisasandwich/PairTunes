@@ -34,7 +34,7 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            ((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
 	            //TODO create a JTextArea of all the songs in the directory
 	            
-	            
+	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
 	            //this is the local media player that we no longer use
 //	            try {
 //	            	//Creates player, starts stream from file (plays song)

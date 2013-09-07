@@ -32,9 +32,9 @@ public class RTPServer implements ControllerListener, Runnable {
 		        PlugInManager.CODEC);
 		ipAddress = destIP;
 		//TODO dynamic paths
-		String srcFile = "res\\" + song;
+		//String srcFile = song;
 		// \\\ is absolute reference ~\ is relaive reference
-		src = new MediaLocator("file:" + srcFile);
+		src = new MediaLocator(song);
 
 	}
 
@@ -94,6 +94,7 @@ public class RTPServer implements ControllerListener, Runnable {
 			SendStream sendStream;
 			int port = 42050;
 			SourceDescription srcDesList[];
+			Player pl = Manager.createPlayer(src);
 			
 			localAddr = new SessionAddress(InetAddress.getLocalHost(), port);
 			InetAddress ipAddr = InetAddress.getByName(ipAddress);
@@ -105,6 +106,7 @@ public class RTPServer implements ControllerListener, Runnable {
 			System.err
 					.println("Created RTP session: " + ipAddress + " " + port);
 			p.start();
+			pl.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
