@@ -72,10 +72,10 @@ public class InitiaterServer implements ControllerListener {
 	public synchronized void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			System.exit(0);
-		} //else if (evt instanceof PrefetchCompleteEvent) {
-			//out.println("Start Sync");
-			//rtpc.p.start();
-			//r.pl.start();
+		} else if (evt instanceof PrefetchCompleteEvent) {
+			out.println("Start Sync");
+			rtpc.p.start();
+			r.pl.start();
 		//} else {
 		//	System.out.println(evt.toString());
 		//}

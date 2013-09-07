@@ -63,7 +63,7 @@ public class InitiaterClient{
 		rtps = new RTPServer(destinationIP, songAddress, offsetTotal, port);
 		Thread t = new Thread(rtps);
 		t.start();
-		rtps.play();
+		//rtps.play();
 		System.out.println("Playing...");
 	}
 	
