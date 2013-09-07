@@ -34,10 +34,6 @@ public class Window extends JFrame {
 		//Set up GUI components
 		importButton = new JButton("Import Folder");
 		displaySong = new JTextField();
-		playPauseButton = new JButton("Play/Pause");
-		stopButton = new JButton("Stop");
-		backButton = new JButton("Back");
-		forwardButton = new JButton("Forward");
 		
 		//Middle scrolling panel stuff
 		songsLabel = new JLabel("Songs:");
@@ -62,25 +58,45 @@ public class Window extends JFrame {
 		}
 		myIPLabel = new JLabel("My IP Address: " + ip);
 		
+		//Playback buttons
+		playPauseButton = new JButton("Play/Pause");
+		stopButton = new JButton("Stop");
+		backButton = new JButton("Back");
+		forwardButton = new JButton("Forward");
+		
+		//Create JPanels
 		setLayout(new BorderLayout());
 		JPanel bottomPanel = new JPanel();
 		add(bottomPanel, BorderLayout.SOUTH);
 		JPanel topPanel = new JPanel();
-		//topPanel.setLayout(new BorderLayout());
 		add(topPanel, BorderLayout.NORTH);
 		
-		JPanel topLeft = new JPanel();
-		topLeft.add(myIPLabel);
-		topLeft.add(streamButton);
-		topLeft.add(rcvButton);
-		topPanel.add(topLeft);
+		//Top Panel
+		topPanel.add(myIPLabel);
+		topPanel.add(streamButton);
+		topPanel.add(rcvButton);
+		topPanel.add(playPauseButton);
+		topPanel.add(stopButton);
+		topPanel.add(backButton);
+		topPanel.add(forwardButton);
 		
-		JPanel topRight = new JPanel();
-		topPanel.add(topRight, BorderLayout.EAST);
-		topRight.add(playPauseButton);
-		topRight.add(stopButton);
-		topRight.add(backButton);
-		topRight.add(forwardButton);
+		
+//		topPanel.setLayout(new BorderLayout());
+//		
+//		//Top Left Panel
+//		JPanel topLeft = new JPanel();
+//		topPanel.add(topLeft, BorderLayout.EAST);
+//		topLeft.add(myIPLabel);
+//		topLeft.add(streamButton);
+//		topLeft.add(rcvButton);
+//		
+//		//Top Right Panel
+//		JPanel topRight = new JPanel();
+//		topPanel.add(topRight, BorderLayout.WEST);
+//		topRight.add(playPauseButton);
+//		topRight.add(stopButton);
+//		topRight.add(backButton);
+//		topRight.add(forwardButton);
 		
 		//Create a split pane with the two scroll panes in it. Create the column headers.
 		JScrollPane songListPane = new JScrollPane(songList);
@@ -105,7 +121,7 @@ public class Window extends JFrame {
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);
-		setSize(1200,500);
+		setSize(1000,500);
 		setVisible(true);
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

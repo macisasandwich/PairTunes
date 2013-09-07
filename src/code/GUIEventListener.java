@@ -37,6 +37,12 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	boolean streaming = false;
 	boolean playing = false;
 	String firstIP, secondIP, rcvIP;
+	
+	String samIP = "172.16.200.239";
+	String jesseIP = "172.16.150.122";
+	String stephenIP = "172.16.138.68";
+	int port1 = 42050;
+	int port2 = 25000;
 
 	public GUIEventListener() {
 		//ic = new InitiatingClient(srcIP, port)
@@ -60,12 +66,6 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
 				
 				importMusic(folderDir);
-
-				String samIP = "172.16.200.239";
-				String jesseIP = "172.16.150.122";
-				String stephenIP = "172.16.138.68";
-				int port1 = 42050;
-				int port2 = 25000;
 			}
 		} else if(e.getSource() == window.streamButton) {
 			ipFrame = new JFrame("Select IP Addresses");
@@ -75,8 +75,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			JPanel x = new JPanel();
 			l1 = new JLabel("IP 1:");
 			l2 = new JLabel("IP 2:");
-			ip1 = new JTextField(10);
-			ip2 = new JTextField(10);
+			ip1 = new JTextField(samIP, 10);
+			ip2 = new JTextField(stephenIP, 10);
 			x.setLayout(new BorderLayout());
 			j.add(l1);
 			j.add(ip1);
