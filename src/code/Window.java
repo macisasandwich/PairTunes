@@ -89,7 +89,7 @@ public class Window extends JFrame {
 											  songListPane, 
 											  queueListPane);
 		splitPane.setOneTouchExpandable(true);
-		splitPane.setDividerLocation(380);
+		splitPane.setDividerLocation(460);
 
 		//Provide minimum sizes for the two components in the split pane
 		Dimension minimumSize = new Dimension(100, 50);
@@ -103,7 +103,7 @@ public class Window extends JFrame {
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);
-		setSize(1000,500);
+		setSize(980,500);
 		setVisible(true);
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
