@@ -13,7 +13,7 @@ public class InitiaterClient {
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
             //BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out.println("gonow");
-            RTPServer.entry("172.16.150.122", "file:////Users/theboss/Development/github/PairTunes/src/res/test.wav");
+            RTPServer.entry("172.16.200.239", "file:////Users/theboss/Development/github/PairTunes/src/res/test.wav");
 		} catch (Exception x) {
 			x.printStackTrace();
 		}

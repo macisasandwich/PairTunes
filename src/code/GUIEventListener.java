@@ -47,6 +47,7 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            } );
 	            
 //	            for (File file: files) {
+//	            	window.songList.setListData(new String[] { file.getName() } );
 //	            	System.out.println(file.getName());
 //	            }
 	            
