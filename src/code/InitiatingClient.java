@@ -17,19 +17,19 @@ import javax.media.PrefetchCompleteEvent;
 // THIS GOES SECOND
 
 public class InitiatingClient implements ControllerListener {
-	
+
 	PrintWriter out;
 	BufferedReader in;
 	String srcIP;
 	int port;
 	long offsetTotal;
 	RTPClient rtpc;
-	
+
 	public InitiatingClient(String srcIP, int port) {
 		this.srcIP = srcIP;
 		this.port = port;
 	}
-	
+
 	public void initiate() {
 		ServerSocket server;
 		Socket client;
@@ -38,12 +38,13 @@ public class InitiatingClient implements ControllerListener {
 			server = new ServerSocket(port);
 			client = server.accept();
 			out = new PrintWriter(client.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(
+					client.getInputStream()));
 			System.out.println("Socket Established.");
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
-		
+
 		long timeStamp = new Date().getTime();
 		out.println("sync");
 		try {
@@ -52,21 +53,21 @@ public class InitiatingClient implements ControllerListener {
 			e.printStackTrace();
 		}
 		long networkDelay = new Date().getTime() - timeStamp;
-		
+
 		rtpc = new RTPClient(srcIP, this, port);
 		Thread t = new Thread(rtpc);
 		t.start();
 		try {
-			t.sleep(networkDelay * 7/8);
+			t.sleep(networkDelay * 7 / 8);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
+
 	public synchronized void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			System.exit(0);
-		} else if (evt instanceof PrefetchCompleteEvent) {		
+		} else if (evt instanceof PrefetchCompleteEvent) {
 			System.out.println("Sync complete. Ready to recieve transmisison.");
 			out.println("gogo");
 			rtpc.p.start();

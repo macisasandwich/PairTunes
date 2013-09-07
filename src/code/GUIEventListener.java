@@ -11,7 +11,6 @@ import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.net.InetAddress;
 import java.util.Map;
-
 import javax.media.ConfigureCompleteEvent;
 import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
@@ -24,7 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GUIEventListener implements ActionListener, ControllerListener, MouseListener {
+public class GUIEventListener implements ActionListener, ControllerListener,
+		MouseListener {
 
 	Map<String, Object> eventSources;
 	Window window;
@@ -40,7 +40,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		this.window = w;
 		this.eventSources = w.getSources();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		// JFileChooser first opens in default directory (My Documents or Unix home directory, usually)
+		// JFileChooser first opens in default directory (My Documents or Unix
+		// home directory, usually)
 		// Subsequent JFileChooser calls open in the previous directory
 	}
 
@@ -49,10 +50,13 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		if (e.getSource() == eventSources.get("importButton")) {
 			int returnVal = fileChooser.showOpenDialog(fileChooser);
 
-			if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us the current directory
+			if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us
+															// the current
+															// directory
 				String folderDir = fileChooser.getSelectedFile().toString();
-				((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
-				
+				((JTextField) (eventSources.get("displaySong")))
+						.setText(folderDir);
+
 				importMusic(folderDir);
 
 				String samIP = "172.16.200.239";
@@ -61,7 +65,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				int port1 = 42050;
 				int port2 = 25000;
 			}
-		} else if(e.getSource() == window.streamButton) {
+
+		} else if (e.getSource() == window.streamButton) {
 			ipFrame = new JFrame("Select IP Addresses");
 			JLabel l1, l2;
 			submit = new JButton("Submit");
@@ -80,12 +85,12 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			x.add(j, BorderLayout.CENTER);
 			x.add(submit, BorderLayout.SOUTH);
 			ipFrame.add(x);
-			ipFrame.setSize(400,200);
+			ipFrame.setSize(400, 200);
 			ipFrame.setVisible(true);
 			submit.addActionListener(this);
 			ip1.addActionListener(this);
 			ip2.addActionListener(this);
-		} else if(e.getSource() == submit) {
+		} else if (e.getSource() == submit) {
 			ipFrame.setVisible(false);
 			String firstIP = ip1.getText().trim();
 			String secondIP = ip2.getText().trim();
@@ -97,13 +102,16 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	public void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			if (is != null) {
-				is.rtps = null;
-				is = null;
+				/*
+				 * is.rtps = null; is = null;
+				 */
+				System.exit(0);
 			}
-			
+
 			if (ic != null) {
-				ic.rtpc = null;
-				ic = null;
+				// ic.rtpc = null;
+				// ic = null;
+				System.exit(0);
 			}
 		} else {
 			// System.out.println(evt.toString());
@@ -113,41 +121,65 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == window.songList) {
-			Rectangle r = window.songList.getCellBounds(0, window.songList.getLastVisibleIndex());
+			Rectangle r = window.songList.getCellBounds(0,
+					window.songList.getLastVisibleIndex());
 			if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 				int index = window.songList.locationToIndex(e.getPoint());
-				// edge case: this has the same functionality as the import button
-				if (window.songListModel.getElementAt(index).songName.equals("<Add some songs!>")) {
+				// edge case: this has the same functionality as the import
+				// button
+				if (window.songListModel.getElementAt(index).songName
+						.equals("<Add some songs!>")) {
 					int returnVal = fileChooser.showOpenDialog(fileChooser);
 
-					if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually gives us the current directory
-						String folderDir = fileChooser.getSelectedFile().toString();
-						((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
-						
+					if (returnVal == JFileChooser.APPROVE_OPTION) { // Actually
+																	// gives us
+																	// the
+																	// current
+																	// directory
+						String folderDir = fileChooser.getSelectedFile()
+								.toString();
+						((JTextField) (eventSources.get("displaySong")))
+								.setText(folderDir);
+
 						importMusic(folderDir);
 					}
 				} else {
-					window.queueModel.addElement(window.songListModel.getElementAt(index));
-					if(streaming) {
-						InitiatingServer is = new InitiatingServer("172.16.150.122", 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath, this);
+					window.queueModel.addElement(window.songListModel
+							.getElementAt(index));
+					if (streaming) {
+						InitiatingServer is = new InitiatingServer(
+								"172.16.150.122", 42050, true,
+								"file:///"
+										+ window.songListModel
+												.getElementAt(index).filePath,
+								this);
 						is.initiate();
 					} else {
-						InitiatingServer is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.songListModel.getElementAt(index).filePath, this);
+						InitiatingServer is = new InitiatingServer("127.0.0.1",
+								42050, false,
+								"file:///"
+										+ window.songListModel
+												.getElementAt(index).filePath,
+								this);
 						is.initiate();
 					}
 				}
 			}
 		} else {
-			Rectangle r = window.queueList.getCellBounds(0, window.queueList.getLastVisibleIndex());
+			Rectangle r = window.queueList.getCellBounds(0,
+					window.queueList.getLastVisibleIndex());
 			if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
 				int index = window.queueList.locationToIndex(e.getPoint());
-				// TODO pass the directory of the song to the server and start broadcasting
-				System.out.println("Playing: " + window.queueModel.getElementAt(index));
-				System.out.println("file:///" + window.queueModel.getElementAt(index).filePath);
+				// TODO pass the directory of the song to the server and start
+				// broadcasting
+				System.out.println("Playing: "
+						+ window.queueModel.getElementAt(index));
+				System.out.println("file:///"
+						+ window.queueModel.getElementAt(index).filePath);
 			}
 		}
 	}
-	
+
 	public void importMusic(String folderDir) {
 		File[] files = new File(folderDir).listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String filename) {
@@ -156,17 +188,19 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		});
 
 		for (File file : files) {
-			if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
+			if (window.songListModel.getElementAt(0).songName
+					.equals("<Add some songs!>"))
 				window.songListModel.remove(0);
-			window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getAbsolutePath()));
+			window.songListModel.addElement(new SongTuple<String, String>(file
+					.getName(), file.getAbsolutePath()));
 		}
-		
+
 		File[] subdirs = new File(folderDir).listFiles(new FileFilter() {
 			public boolean accept(File file) {
 				return file.isDirectory();
 			}
 		});
-		
+
 		for (File subdir : subdirs) {
 			importMusic(subdir.getPath());
 		}
