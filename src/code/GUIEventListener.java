@@ -30,10 +30,11 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 	JButton submit, rSubmit;
 	InitiatingServer is;
 	InitiatingClient ic;
-	JTextField ip1, ip2, srPort1, srPort2;
+	JTextField ip1, ip2, srPort1F, srPort2F, rPort1F;
 	boolean streaming = false;
 	boolean playing = false;
 	String firstIP, secondIP, rcvIP;
+	int srPort1, srPort2, rPort1;
 	
 	public final String samIP = "172.16.200.239";
 	public final String jesseIP = "172.16.150.122";
@@ -81,17 +82,17 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 			l4 = new JLabel("Port 2:");
 			ip1 = new JTextField(samIP, 10);
 			ip2 = new JTextField(stephenIP, 10);
-			srPort1 = new JTextField(Integer.toString(port1), 5);
-			srPort2 = new JTextField(Integer.toString(port2), 5);
+			srPort1F = new JTextField(Integer.toString(port1), 5);
+			srPort2F = new JTextField(Integer.toString(port2), 5);
 			x.setLayout(new BorderLayout());
 			j.add(l1);
 			j.add(ip1);
 			j.add(l2);
 			j.add(ip2);
 			j.add(l3);
-			j.add(srPort1);
+			j.add(srPort1F);
 			j.add(l4);
-			j.add(srPort2);
+			j.add(srPort2F);
 			j.add(submit);
 			x.add(j, BorderLayout.CENTER);
 			x.add(submit, BorderLayout.SOUTH);
@@ -110,12 +111,12 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 			l1 = new JLabel("IP 1 (Jesse):");
 			ip1 = new JTextField(jesseIP, 10);
 			l2 = new JLabel("Port:");
-			srPort1 = new JTextField(5);			
+			rPort1F = new JTextField(5);			
 			x.setLayout(new BorderLayout());
 			j.add(l1);
 			j.add(ip1);
 			j.add(l2);
-			j.add(srPort1);
+			j.add(rPort1F);
 			x.add(j, BorderLayout.CENTER);
 			x.add(rSubmit, BorderLayout.SOUTH);
 			ipRFrame.add(x);
@@ -127,11 +128,14 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 			ipFrame.setVisible(false);
 			firstIP = ip1.getText().trim();
 			secondIP = ip2.getText().trim();
+			srPort1 = Integer.parseInt(srPort1F.getText().trim());
+			srPort2 = Integer.parseInt(srPort2F.getText().trim());
 			streaming = true;
 		} else if (e.getSource() == rSubmit) {
 			ipRFrame.setVisible(false);
 			rcvIP = ip1.getText().trim();
-			ic = new InitiatingClient(rcvIP, 42050);
+			rPort1 = Integer.parseInt(rPort1F.getText().trim());
+			ic = new InitiatingClient(rcvIP, rPort1);
 			ic.initiate();
 		}
 	}
