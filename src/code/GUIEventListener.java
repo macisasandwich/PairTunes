@@ -33,7 +33,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	JButton submit, rSubmit;
 	InitiatingServer is;
 	InitiatingClient ic;
-	JTextField ip1, ip2;
+	JTextField ip1, ip2, rcvPort1, rcvPort2;
 	boolean streaming = false;
 	boolean playing = false;
 	String firstIP, secondIP, rcvIP;
@@ -69,19 +69,27 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			}
 		} else if(e.getSource() == window.streamButton) {
 			ipFrame = new JFrame("Select IP Addresses");
-			JLabel l1, l2;
+			JLabel l1, l2, l3, l4;
 			submit = new JButton("Submit");
 			JPanel j = new JPanel();
 			JPanel x = new JPanel();
 			l1 = new JLabel("IP 1 (Sam):");
 			l2 = new JLabel("IP 2 (Stephen):");
+			l3 = new JLabel("Port 1:");
+			l4 = new JLabel("Port 2:");
 			ip1 = new JTextField(samIP, 10);
 			ip2 = new JTextField(stephenIP, 10);
+			rcvPort1 = new JTextField(Integer.toString(port1), 5);
+			rcvPort2 = new JTextField(Integer.toString(port2), 5);
 			x.setLayout(new BorderLayout());
 			j.add(l1);
 			j.add(ip1);
 			j.add(l2);
 			j.add(ip2);
+			j.add(l3);
+			j.add(rcvPort1);
+			j.add(l4);
+			j.add(rcvPort2);
 			j.add(submit);
 			x.add(j, BorderLayout.CENTER);
 			x.add(submit, BorderLayout.SOUTH);
