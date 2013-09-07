@@ -40,70 +40,17 @@ public class InitiatingServer{
 				System.out.println("Bad Server... Exiting...");
 				System.exit(1);
 			}
+			out.println("ok");
 			
-			System.out.println("Starting Sync...");
-			offsetTotal = 0;
-            
-            //for (int i = 0; i <= 3; i++) {
-            //	out.println(new GregorianCalendar().getTimeInMillis());
-            //	offset = Long.parseLong(in.readLine());
-            //	System.out.println(offset);
-            //	offsetTotal += offset;
-            //}
-            
-            //offsetTotal /= 4;  
-            
-            System.out.println("sync Value is: "+offsetTotal);
-            
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
 		
 		System.out.println("Sync Complete.\nStarting Transmission...");
-		rtps = new RTPServer(destinationIP, songAddress, offsetTotal, port);
+		rtps = new RTPServer(destinationIP, songAddress, port);
 		Thread t = new Thread(rtps);
 		t.start();
 		rtps.play();
 		System.out.println("Playing...");
 	}
-	
-	
-	//Stephen's version
-/*	public static void startComm() {
-		Socket client;
-		try {
-            client = new Socket(InetAddress.getByName("172.16.200.239"), 42050);
-            System.out.println("GGG");
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-            //BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out.println("gonow");
-            RTPServer.entry("172.16.200.239", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
-		} catch (Exception x) {
-			x.printStackTrace();
-		}
-	}*/	
-	
-	
-	/*public static void startComm() {
-		Socket client;
-		try {
-            client = new Socket(InetAddress.getByName("172.16.200.239"), 42050);
-            System.out.println("Intiating socket!");
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            long offsetTotal = 0;
-            
-            for (int i = 0; i <= 3; i++) {
-            	out.println(new GregorianCalendar().getTimeInMillis());
-            	offsetTotal += Long.parseLong(in.readLine());
-            }
-            
-            offsetTotal /= 3;
-            
-            RTPServer.entry("172.16.200.239", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
-            wait(offsetTotal);
-		} catch (Exception x) {
-			x.printStackTrace();
-		}
-	}*/
 }

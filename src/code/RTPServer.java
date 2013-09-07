@@ -184,19 +184,12 @@ public class RTPServer implements ControllerListener, Runnable {
 	private boolean realized = false;
 	private boolean configured = false;
 	private String ipAddress;
-	private long offset;
 	private int port;
 	Processor p;
 	Player pl;
 	MediaLocator src;
-	
-	/*public static void entry(String destIP, String songAddress, long offset, int port) {
-		RTPServer rtp = new RTPServer(destIP, songAddress, offset, port);
-		Thread t = new Thread(rtp);
-		t.start();
-	}*/
 
-	public RTPServer(String destIP, String song, long offset, int port) {
+	public RTPServer(String destIP, String song, int port) {
 		Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
 		Format input2 = new AudioFormat(AudioFormat.MPEG);
 		Format output = new AudioFormat(AudioFormat.LINEAR);
@@ -206,11 +199,7 @@ public class RTPServer implements ControllerListener, Runnable {
 		        new Format[]{output},
 		        PlugInManager.CODEC);
 		ipAddress = destIP;
-		this.offset = offset;
 		this.port = port;
-		//TODO dynamic paths
-		//String srcFile = song;
-		// \\\ is absolute reference ~\ is relaive reference
 		src = new MediaLocator(song);
 
 	}
@@ -291,7 +280,7 @@ public class RTPServer implements ControllerListener, Runnable {
 	
 	public void play() {
 		try {
-			//Player pl = Manager.createPlayer(src);
+			Player pl = Manager.createPlayer(src);
 			pl.start();
 		} catch (Exception e) {
 			e.printStackTrace();
