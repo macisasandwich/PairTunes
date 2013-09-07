@@ -23,11 +23,10 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	
 	public void setWindow(Window w) {
 		this.window = w;
+		this.eventSources = w.getSources();
 	}
 	
-	public void setSources(Map<String, Object> eventSources) {
-		this.eventSources = eventSources;
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -46,16 +45,16 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            	    { return filename.endsWith(".wav") || filename.endsWith(".mp3"); }
 	            } );
 	            
-//	            for (File file: files) {
-//	            	window.songList.setListData(new String[] { file.getName() } );
-//	            	System.out.println(file.getName());
-//	            }
-	            
-	            //TODO if songList is empty, clear the empty message
+	            for (File file: files) {
+	            	if (window.songListModel.getElementAt(0).equals("<Add some songs!>")) 
+	            		window.songListModel.remove(0);
+	            	window.songListModel.addElement(file.getName());
+	            }
 
 //	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
 //	            RTPClient.entry("172.16.150.122");
-	            //InitiaterClient.startComm();
+	            
+//	            InitiaterClient.startComm();
 	        }
 		}
 	}

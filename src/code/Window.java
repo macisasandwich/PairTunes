@@ -1,6 +1,10 @@
 package code;
 
 import java.awt.BorderLayout;
+import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -13,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.DefaultListModel;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame {
@@ -21,6 +27,7 @@ public class Window extends JFrame {
 	JButton importButton;
 	JTextField displaySong, friendIPField;
 	JLabel myIPLabel, friendIPLabel;
+	DefaultListModel<String> songListModel;
 	JList<String> songList;
 	GUIEventListener eventListener;
 	
@@ -29,7 +36,9 @@ public class Window extends JFrame {
 		//Set up GUI components
 		importButton = new JButton("Import Folder");
 		displaySong = new JTextField();
-		songList = new JList<String>( new String[] {"<Add some songs!>"} );
+		songListModel = new DefaultListModel<String>();
+		songListModel.addElement("<Add some songs!>");
+		songList = new JList<String>(songListModel);
 		friendIPField = new JTextField(10);
 		friendIPLabel = new JLabel("Friend IP Address:");
 		String ip = "Error";
@@ -47,7 +56,8 @@ public class Window extends JFrame {
 		add(topPanel, BorderLayout.NORTH);
 		JPanel topRightPanel = new JPanel();
 		
-		add(songList, BorderLayout.CENTER);
+		songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		add(new JScrollPane(songList), BorderLayout.CENTER);
 		
 		topPanel.add(myIPLabel);
 		topPanel.add(topRightPanel);
@@ -61,7 +71,7 @@ public class Window extends JFrame {
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		//Set event Listener
+		//Set event listener
 		eventListener = listener;
 		
 		//Register event listeners, add components to list of event sources to be passed to GUIEventListener
@@ -70,6 +80,20 @@ public class Window extends JFrame {
 		eventSources = new HashMap<String, Object>();
 		eventSources.put("loadButton", importButton);
 		eventSources.put("displaySong", displaySong);
+		
+		//Set mouse listener
+		MouseListener mouseListener = new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		    	Rectangle r = songList.getCellBounds(0, songList.getLastVisibleIndex());
+		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
+		    		int index = songList.locationToIndex(e.getPoint());
+		    		System.out.println("Double clicked on Item " + index+1 + ", " + songListModel.getElementAt(index));
+		    		//TODO stop printing to console and actually do something with the selected song
+		    		//TODO don't forget about the edge case with "<Add some songs!>"
+		    	}
+		    }
+		};
+		songList.addMouseListener(mouseListener);
 	}
 	
 	public Map<String, Object> getSources() {
