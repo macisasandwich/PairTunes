@@ -18,10 +18,12 @@ import java.util.Date;
 // THIS GOES SECOND
 
 public class InitiaterServer implements ControllerListener {
+	
 	PrintWriter out;
 	BufferedReader in;
 	String srcIP;
 	int port;
+	long offsetTotal;
 	RTPClient rtpc;
 	
 	public InitiaterServer(String srcIP, int port) {
@@ -32,61 +34,51 @@ public class InitiaterServer implements ControllerListener {
 	public void initiate() {
 		ServerSocket server;
 		Socket client;
-		long offsetTotal = 0;
 		try {
+			System.out.println("Initiating Server Socket...");
 			server = new ServerSocket(port);
 			client = server.accept();
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			long timeDiff;			
 			
-			for (int i = 0; i <= 3; i++) {
-				timeDiff = new GregorianCalendar().getTimeInMillis() - Long.parseLong(in.readLine());
-				out.println(timeDiff);
-				offsetTotal += timeDiff;
-				System.out.println(timeDiff);
-			}
+			out.println("Start Sync");
 			
-			offsetTotal /= 4;
-
-			System.out.println(offsetTotal);
-			System.out.println("Handshake received from server. Socket established!");
+			System.out.println("Starting Sync...");
+			offsetTotal = 0;
+			//long timeDiff;			
 			
-			rtpc = new RTPClient(srcIP, this);
-			Thread t = new Thread(rtpc);
-			t.start();
+			//for (int i = 0; i <= 3; i++) {
+			//	timeDiff = new GregorianCalendar().getTimeInMillis() - Long.parseLong(in.readLine());
+			//	out.println(timeDiff);
+			//	offsetTotal += timeDiff;
+			//	System.out.println(timeDiff);
+			//}
+			
+			//offsetTotal /= 4;
+			
+			System.out.println("Sync value is: "+offsetTotal);
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
+		
+		System.out.println("Sync complete. Ready to recieve transmisison.");
+		
+		rtpc = new RTPClient(srcIP, this);
+		Thread t = new Thread(rtpc);
+		t.start();
+		rtpc.p.start();
 	}
 	
 	public synchronized void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			System.exit(0);
-		} else if (evt instanceof PrefetchCompleteEvent) {
-			out.println(new Date().getTime());
-			long delay = 0;
-			
-			try {
-				delay = Long.parseLong(in.readLine());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			out.println("GOGOGO");
-			
-			try {
-				wait(delay);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//out.println("ccccccc");
-			rtpc.p.start();
+		} //else if (evt instanceof PrefetchCompleteEvent) {
+			//out.println("Start Sync");
+			//rtpc.p.start();
 			//r.pl.start();
-		} else {
-			System.out.println(evt.toString());
-		}
+		//} else {
+		//	System.out.println(evt.toString());
+		//}
 	}
 	
 	/*public static void startComm(RTPServer r) {
