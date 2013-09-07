@@ -17,7 +17,7 @@ public class InitiaterServer {
 			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			in.readLine();
 			System.out.println("WON");
-			RTPClient.entry("172.16.138.68");
+			RTPClient.entry("172.16.150.122");
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
