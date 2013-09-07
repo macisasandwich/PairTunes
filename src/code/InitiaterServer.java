@@ -63,7 +63,7 @@ public class InitiaterServer implements ControllerListener {
 			System.exit(0);
 		} else if (evt instanceof PrefetchCompleteEvent) {
 			out.println("GOGOGO");
-			out.println("this is pure delay purpose");
+			out.println('c');
 			rtpc.p.start();
 			//r.pl.start();
 		} else {
