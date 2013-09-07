@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 // THIS GOES FIRST
 // It initiates the socket AND the music
@@ -17,7 +15,7 @@ public class InitiatingServer{
 	
 	String destinationIP;
 	int port;
-	long offsetTotal, offset;
+	long offsetTotal = 0, offset;
 	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\Somewhere I Belong.wav";
 	PrintWriter out;
 	BufferedReader in;
@@ -41,6 +39,7 @@ public class InitiatingServer{
 				System.exit(1);
 			}
 			out.println("ok");
+
 			
 		} catch (Exception x) {
 			x.printStackTrace();
@@ -50,7 +49,16 @@ public class InitiatingServer{
 		rtps = new RTPServer(destinationIP, songAddress, port);
 		Thread t = new Thread(rtps);
 		t.start();
-		rtps.play();
+		
+		try {
+			if (in.readLine().equals("Start Sync")) {
+				rtps.play();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//rtps.play();
 		System.out.println("Playing...");
 	}
 }

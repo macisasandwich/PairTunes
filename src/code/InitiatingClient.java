@@ -66,9 +66,7 @@ public class InitiatingClient implements ControllerListener {
 	public synchronized void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			System.exit(0);
-		} else if (evt instanceof PrefetchCompleteEvent) {
-			
-			
+		} else if (evt instanceof PrefetchCompleteEvent) {		
 			System.out.println("Sync complete. Ready to recieve transmisison.");
 			rtpc.p.start();
 		}
