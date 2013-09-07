@@ -185,14 +185,14 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				System.out.println("Playing: " + window.queueModel.getElementAt(index));
 				if(streaming) {
 					System.out.println(firstIP);
-					is = new InitiatingServer(firstIP, 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath, this);
+					is = new InitiatingServer(firstIP, 42050, true,"file:///"+window.queueModel.getElementAt(index).filePath, this);
 					is.initiate();
 					if (!secondIP.equals("")) {
-						is = new InitiatingServer(secondIP, 25000, true,"file:///"+window.songListModel.getElementAt(index).filePath, this);
+						is = new InitiatingServer(secondIP, 25000, true,"file:///"+window.queueModel.getElementAt(index).filePath, this);
 						is.initiate();
 					}
 				} else {
-					is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.songListModel.getElementAt(index).filePath, this);
+					is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.queueModel.getElementAt(index).filePath, this);
 					is.initiate();
 				}
 				playing = true;
