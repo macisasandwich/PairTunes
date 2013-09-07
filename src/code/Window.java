@@ -22,7 +22,7 @@ import javax.swing.DefaultListModel;
 public class Window extends JFrame {
 	
 	Map<String, Object> eventSources;
-	JButton importButton, streamButton, playPauseButton, stopButton, backButton, forwardButton;
+	JButton importButton, streamButton, rcvButton, playPauseButton, stopButton, backButton, forwardButton;
 	JTextField displaySong, friendIPField;
 	JLabel myIPLabel, friendIPLabel, songsLabel, queueLabel;
 	DefaultListModel<SongTuple<String, String>> songListModel, queueModel;
@@ -53,6 +53,7 @@ public class Window extends JFrame {
 		//IP stuff
 		friendIPField = new JTextField(10);
 		streamButton = new JButton("Stream to IP Addresses...");
+		rcvButton = new JButton("Receive from IP Addresses...");
 		String ip = "Error";
 		try {
 			ip = InetAddress.getLocalHost().getHostAddress();
@@ -61,6 +62,7 @@ public class Window extends JFrame {
 		}
 		myIPLabel = new JLabel("My IP Address: " + ip);
 		
+		//Create JPanels
 		setLayout(new BorderLayout());
 		JPanel bottomPanel = new JPanel();
 		add(bottomPanel, BorderLayout.SOUTH);
@@ -68,11 +70,13 @@ public class Window extends JFrame {
 		topPanel.setLayout(new BorderLayout());
 		add(topPanel, BorderLayout.NORTH);
 		
+		//Top Left Panel
 		JPanel topLeft = new JPanel();
 		topPanel.add(topLeft, BorderLayout.WEST);
 		topLeft.add(myIPLabel);
 		topLeft.add(streamButton);
 		
+		//Top Right Panel
 		JPanel topRight = new JPanel();
 		topPanel.add(topRight, BorderLayout.EAST);
 		topRight.add(playPauseButton);
@@ -97,6 +101,9 @@ public class Window extends JFrame {
 		queueListPane.setMinimumSize(minimumSize);
 		add(splitPane, BorderLayout.CENTER);
 		
+		topPanel.add(myIPLabel);
+		topPanel.add(streamButton);
+		topPanel.add(rcvButton);
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);
@@ -109,6 +116,7 @@ public class Window extends JFrame {
 		eventListener = listener;
 		
 		//Register event listeners, add components to list of event sources to be passed to GUIEventListener
+		rcvButton.addActionListener(eventListener);
 		streamButton.addActionListener(eventListener);
 		importButton.addActionListener(eventListener);
 		displaySong.addActionListener(eventListener);
