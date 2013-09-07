@@ -3,7 +3,7 @@ package code;
 import javax.media.*;
 import javax.media.format.AudioFormat;
 
-public class RTPClient implements ControllerListener, Runnable {
+public class RTPClient implements Runnable {
 
 	Player p;
 	MediaLocator src;
@@ -44,7 +44,7 @@ public class RTPClient implements ControllerListener, Runnable {
 		}
 	}
 
-	public synchronized void controllerUpdate(ControllerEvent evt) {
+	/*public synchronized void controllerUpdate(ControllerEvent evt) {
 		if (evt instanceof EndOfMediaEvent) {
 			System.exit(0);
 		} else if (evt instanceof PrefetchCompleteEvent) {
@@ -53,5 +53,5 @@ public class RTPClient implements ControllerListener, Runnable {
 		} else {
 			System.out.println(evt.toString());
 		}
-	}
+	}*/
 }

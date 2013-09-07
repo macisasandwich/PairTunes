@@ -17,7 +17,7 @@ public class InitiatingServer{
 	
 	String destinationIP;
 	int port;
-	long offsetTotal, offset;
+	long offsetTotal = 0, offset;
 	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\Somewhere I Belong.wav";
 	PrintWriter out;
 	BufferedReader in;
@@ -36,10 +36,10 @@ public class InitiatingServer{
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			
-			if (!in.readLine().equals("Start Sync")) {
+			/*if (!in.readLine().equals("Start Sync")) {
 				System.out.println("Bad Server... Exiting...");
 				System.exit(1);
-			}
+			}*/
 			
 			System.out.println("Starting Sync...");
 			offsetTotal = 0;
@@ -63,7 +63,16 @@ public class InitiatingServer{
 		rtps = new RTPServer(destinationIP, songAddress, offsetTotal, port);
 		Thread t = new Thread(rtps);
 		t.start();
-		rtps.play();
+		
+		try {
+			if (in.readLine().equals("Start Sync")) {
+				rtps.play();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//rtps.play();
 		System.out.println("Playing...");
 	}
 	

@@ -45,7 +45,7 @@ public class InitiatingClient implements ControllerListener {
 			x.printStackTrace();
 		}
 		
-		out.println("Start Sync");
+		//out.println("Start Sync");
 		
 		rtpc = new RTPClient(srcIP, this);
 		Thread t = new Thread(rtpc);
@@ -58,8 +58,10 @@ public class InitiatingClient implements ControllerListener {
 		if (evt instanceof EndOfMediaEvent) {
 			System.exit(0);
 		} else if (evt instanceof PrefetchCompleteEvent) {
-			System.out.println("Starting Sync...");
-			offsetTotal = 0;
+			out.println("Start Sync");
+			//TODO there's a delay here THAT STEPHEN WON'T SOLVE.
+			//System.out.println("Starting Sync...");
+			//offsetTotal = 0;
 			//long timeDiff;			
 			
 			//for (int i = 0; i <= 3; i++) {
@@ -71,8 +73,8 @@ public class InitiatingClient implements ControllerListener {
 			
 			//offsetTotal /= 4;
 			
-			System.out.println("Sync value is: "+offsetTotal);
-			System.out.println("Sync complete. Ready to recieve transmisison.");
+			//System.out.println("Sync value is: "+offsetTotal);
+			//System.out.println("Sync complete. Ready to recieve transmisison.");
 			rtpc.p.start();
 		}// else {
 		//	System.out.println(evt.toString());
