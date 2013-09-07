@@ -1,27 +1,29 @@
 package code;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 // THIS GOES FIRST
 // It initiates the socket AND the music
 // It sends the music
 
-public class InitiaterClient{
+public class InitiatingServer{
 	
 	String destinationIP;
 	int port;
 	long offsetTotal, offset;
-	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav";
+	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\Somewhere I Belong.wav";
 	PrintWriter out;
 	BufferedReader in;
 	RTPServer rtps;
 	
-	public InitiaterClient(String destinationIP, int port) {
+	public InitiatingServer(String destinationIP, int port) {
 		this.destinationIP = destinationIP;
 		this.port = port;
 	}
@@ -29,39 +31,40 @@ public class InitiaterClient{
 	public void initiate() {
 		Socket client;
 		try {
+			System.out.println("Initiating Client Socket...");
 			client = new Socket(InetAddress.getByName(destinationIP), port);
-			System.out.println("Initiating Socket!");
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			
+			if (!in.readLine().equals("Start Sync")) {
+				System.out.println("Bad Server... Exiting...");
+				System.exit(1);
+			}
+			
+			System.out.println("Starting Sync...");
 			offsetTotal = 0;
             
-            for (int i = 0; i <= 3; i++) {
-            	out.println(new GregorianCalendar().getTimeInMillis());
-            	offset = Long.parseLong(in.readLine());
-            	System.out.println(offset);
-            	offsetTotal += offset;
-            }
+            //for (int i = 0; i <= 3; i++) {
+            //	out.println(new GregorianCalendar().getTimeInMillis());
+            //	offset = Long.parseLong(in.readLine());
+            //	System.out.println(offset);
+            //	offsetTotal += offset;
+            //}
             
-            offsetTotal /= 4;  
+            //offsetTotal /= 4;  
             
-            System.out.println(offsetTotal);
+            System.out.println("sync Value is: "+offsetTotal);
             
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
 		
-		//RTPServer.entry(destinationIP, songAddress, offsetTotal, port);
+		System.out.println("Sync Complete.\nStarting Transmission...");
 		rtps = new RTPServer(destinationIP, songAddress, offsetTotal, port);
 		Thread t = new Thread(rtps);
 		t.start();
-		
-		try {
-			if (in.readLine().equals("GOGOGO")) {
-				rtps.play();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		rtps.play();
+		System.out.println("Playing...");
 	}
 	
 	
