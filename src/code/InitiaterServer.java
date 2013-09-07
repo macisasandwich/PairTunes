@@ -75,7 +75,7 @@ public class InitiaterServer implements ControllerListener {
 		} else if (evt instanceof PrefetchCompleteEvent) {
 			out.println("Start Sync");
 			rtpc.p.start();
-			r.pl.start();
+			//r.pl.start();
 		//} else {
 		//	System.out.println(evt.toString());
 		//}
@@ -108,4 +108,5 @@ public class InitiaterServer implements ControllerListener {
 			x.printStackTrace();
 		}
 	}*/
-}
+	}}
+
