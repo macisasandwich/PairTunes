@@ -58,6 +58,7 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 					window.songListModel.addElement(file.getName());
 				}
 
+
 				// TODO have the top of queue be playing
 				// TODO song list and queue are synced between comps
 
@@ -76,8 +77,8 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 
 				// Uncomment the following if you are SERVING the music
 				// temp testing to Sam's computer
-				// InitiaterClient ic = new InitiaterClient(samIP, port1);
-				// ic.initiate();
+				 InitiaterClient ic = new InitiaterClient(samIP, port1);
+				 ic.initiate();
 
 				// Uncomment the following if you are RECEVING the music
 				// temp testing to Jesse
