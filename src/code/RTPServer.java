@@ -291,7 +291,7 @@ public class RTPServer implements ControllerListener, Runnable {
 	
 	public void play() {
 		try {
-			Player pl = Manager.createPlayer(src);
+			//Player pl = Manager.createPlayer(src);
 			pl.start();
 		} catch (Exception e) {
 			e.printStackTrace();
