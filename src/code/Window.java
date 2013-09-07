@@ -67,14 +67,15 @@ public class Window extends JFrame {
 		JPanel bottomPanel = new JPanel();
 		add(bottomPanel, BorderLayout.SOUTH);
 		JPanel topPanel = new JPanel();
-		topPanel.setLayout(new BorderLayout());
+		//topPanel.setLayout(new BorderLayout());
 		add(topPanel, BorderLayout.NORTH);
 		
 		//Top Left Panel
 		JPanel topLeft = new JPanel();
-		topPanel.add(topLeft, BorderLayout.WEST);
 		topLeft.add(myIPLabel);
 		topLeft.add(streamButton);
+		topLeft.add(rcvButton);
+		topPanel.add(topLeft);
 		
 		//Top Right Panel
 		JPanel topRight = new JPanel();
@@ -107,7 +108,7 @@ public class Window extends JFrame {
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);
-		setSize(800,500);
+		setSize(1200,500);
 		setVisible(true);
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
