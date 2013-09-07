@@ -12,16 +12,18 @@ public class RTPServer implements ControllerListener, Runnable {
 	private boolean realized = false;
 	private boolean configured = false;
 	private String ipAddress;
+	private long offset;
+	private int port;
 	Processor p;
 	MediaLocator src;
 	
-	public static void entry(String destIP, String songAddress) {
-		RTPServer rtp = new RTPServer(destIP, songAddress);
+	public static void entry(String destIP, String songAddress, long offset, int port) {
+		RTPServer rtp = new RTPServer(destIP, songAddress, offset, port);
 		Thread t = new Thread(rtp);
 		t.start();
 	}
 
-	public RTPServer(String destIP, String song) {
+	public RTPServer(String destIP, String song, long offset, int port) {
 		Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
 		Format input2 = new AudioFormat(AudioFormat.MPEG);
 		Format output = new AudioFormat(AudioFormat.LINEAR);
@@ -31,6 +33,8 @@ public class RTPServer implements ControllerListener, Runnable {
 		        new Format[]{output},
 		        PlugInManager.CODEC);
 		ipAddress = destIP;
+		this.offset = offset;
+		this.port = port;
 		//TODO dynamic paths
 		//String srcFile = song;
 		// \\\ is absolute reference ~\ is relaive reference
@@ -92,9 +96,9 @@ public class RTPServer implements ControllerListener, Runnable {
 			RTPManager rtpMgr = RTPManager.newInstance();
 			SessionAddress localAddr, destAddr;
 			SendStream sendStream;
-			int port = 42050;
+			//int port = 42050;
 			SourceDescription srcDesList[];
-			Player pl = Manager.createPlayer(src);
+			//Player pl = Manager.createPlayer(src);
 			
 			localAddr = new SessionAddress(InetAddress.getLocalHost(), port);
 			InetAddress ipAddr = InetAddress.getByName(ipAddress);
@@ -106,7 +110,8 @@ public class RTPServer implements ControllerListener, Runnable {
 			System.err
 					.println("Created RTP session: " + ipAddress + " " + port);
 			p.start();
-			pl.start();
+			wait(offset);
+			this.play();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
