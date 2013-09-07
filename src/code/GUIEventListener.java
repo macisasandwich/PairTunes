@@ -173,6 +173,7 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
 					if(streaming) {
+						System.out.println(firstIP);
 						is = new InitiatingServer(firstIP, 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath, this);
 						is.initiate();
 					} else {

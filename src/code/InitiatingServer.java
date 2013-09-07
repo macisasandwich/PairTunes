@@ -50,7 +50,7 @@ public class InitiatingServer {
 	public void initiateStream() {
 		Socket client;
 		try {
-			System.out.println("Initiating Client Socket...");
+			System.out.println("Initiating Client Socket..."+destinationIP);
 			client = new Socket(InetAddress.getByName(destinationIP), port);
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
