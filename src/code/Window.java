@@ -1,6 +1,10 @@
 package code;
 
 import java.awt.BorderLayout;
+import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -66,7 +70,7 @@ public class Window extends JFrame {
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		//Set event Listener
+		//Set event listener
 		eventListener = listener;
 		
 		//Register event listeners, add components to list of event sources to be passed to GUIEventListener
@@ -75,6 +79,20 @@ public class Window extends JFrame {
 		eventSources = new HashMap<String, Object>();
 		eventSources.put("loadButton", importButton);
 		eventSources.put("displaySong", displaySong);
+		
+		//Set mouse listener
+		MouseListener mouseListener = new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		    	Rectangle r = songList.getCellBounds(0, songList.getLastVisibleIndex());
+		    	if (r != null && r.contains(e.getPoint()) && e.getClickCount() == 2) {
+		    		int index = songList.locationToIndex(e.getPoint());
+		    		System.out.println("Double clicked on Item " + index+1 + ", " + songListModel.getElementAt(index));
+		    		//TODO stop printing to console and actually do something with the selected song
+		    		//TODO don't forget about the edge case with "<Add some songs!>"
+		    	}
+		    }
+		};
+		songList.addMouseListener(mouseListener);
 	}
 	
 	public Map<String, Object> getSources() {
