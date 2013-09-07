@@ -29,39 +29,40 @@ public class InitiaterClient{
 	public void initiate() {
 		Socket client;
 		try {
+			System.out.println("Initiating Client Socket...");
 			client = new Socket(InetAddress.getByName(destinationIP), port);
-			System.out.println("Initiating Socket!");
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			
+			if (!in.readLine().equals("Start Sync")) {
+				System.out.println("Bad Server... Exiting...");
+				System.exit(1);
+			}
+			
+			System.out.println("Starting Sync...");
 			offsetTotal = 0;
             
-            for (int i = 0; i <= 3; i++) {
-            	out.println(new GregorianCalendar().getTimeInMillis());
-            	offset = Long.parseLong(in.readLine());
-            	System.out.println(offset);
-            	offsetTotal += offset;
-            }
+            //for (int i = 0; i <= 3; i++) {
+            //	out.println(new GregorianCalendar().getTimeInMillis());
+            //	offset = Long.parseLong(in.readLine());
+            //	System.out.println(offset);
+            //	offsetTotal += offset;
+            //}
             
-            offsetTotal /= 4;  
+            //offsetTotal /= 4;  
             
-            System.out.println(offsetTotal);
+            System.out.println("sync Value is: "+offsetTotal);
             
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
 		
-		//RTPServer.entry(destinationIP, songAddress, offsetTotal, port);
+		System.out.println("Sync Complete.\nStarting Transmission...");
 		rtps = new RTPServer(destinationIP, songAddress, offsetTotal, port);
 		Thread t = new Thread(rtps);
 		t.start();
-		
-		try {
-			if (in.readLine().equals("GOGOGO")) {
-				rtps.play();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		rtps.play();
+		System.out.println("Playing...");
 	}
 	
 	
