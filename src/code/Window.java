@@ -100,6 +100,8 @@ public class Window extends JFrame {
 		//Register event listeners, add components to list of event sources to be passed to GUIEventListener
 		importButton.addActionListener(eventListener);
 		displaySong.addActionListener(eventListener);
+		songList.addMouseListener(eventListener);
+		queueList.addMouseListener(eventListener);
 		eventSources = new HashMap<String, Object>();
 		eventSources.put("loadButton", importButton);
 		eventSources.put("displaySong", displaySong);
