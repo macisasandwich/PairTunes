@@ -10,9 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.DefaultListModel;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame {
@@ -21,6 +22,7 @@ public class Window extends JFrame {
 	JButton importButton;
 	JTextField displaySong, friendIPField;
 	JLabel myIPLabel, friendIPLabel;
+	DefaultListModel<String> songListModel;
 	JList<String> songList;
 	GUIEventListener eventListener;
 	
@@ -29,7 +31,9 @@ public class Window extends JFrame {
 		//Set up GUI components
 		importButton = new JButton("Import Folder");
 		displaySong = new JTextField();
-		songList = new JList<String>( new String[] {"<Add some songs!>"} );
+		songListModel = new DefaultListModel<String>();
+		songListModel.addElement("<Add some songs!>");
+		songList = new JList<String>(songListModel);
 		friendIPField = new JTextField(10);
 		friendIPLabel = new JLabel("Friend IP Address:");
 		String ip = "Error";
@@ -47,6 +51,7 @@ public class Window extends JFrame {
 		add(topPanel, BorderLayout.NORTH);
 		JPanel topRightPanel = new JPanel();
 		
+		songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(songList, BorderLayout.CENTER);
 		
 		topPanel.add(myIPLabel);
@@ -60,8 +65,6 @@ public class Window extends JFrame {
 		setVisible(true);
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		songList.setListData(new String[] {"oogla boogla"});
 		
 		//Set event Listener
 		eventListener = listener;
