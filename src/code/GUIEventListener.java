@@ -1,5 +1,6 @@
 package code;
 
+import java.awt.BorderLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.net.InetAddress;
 import java.util.Map;
 
 import javax.media.ConfigureCompleteEvent;
@@ -15,7 +17,11 @@ import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
 import javax.media.EndOfMediaEvent;
 import javax.media.RealizeCompleteEvent;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GUIEventListener implements ActionListener, ControllerListener, MouseListener {
@@ -25,6 +31,10 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	JFileChooser fileChooser = new JFileChooser();
 	InitiatingServer is;
 	InitiatingClient ic;
+	JFrame ipFrame;
+	JButton submit;
+	JTextField ip1, ip2;
+	boolean streaming = false;
 
 	public void setWindow(Window w) {
 		this.window = w;
@@ -45,34 +55,41 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				
 				importMusic(folderDir);
 
-				// TODO have the top of queue be playing
-				// TODO song list and queue are synced between comps
-
-				// InitiaterServer.startComm();
-
-				/*
-				 * Sam's IP = 172.16.200.239
-				 * Jesse's IP = 172.16.150.122
-				 * Stephen's IP = 172.16.138.68
-				 */
-
 				String samIP = "172.16.200.239";
 				String jesseIP = "172.16.150.122";
 				String stephenIP = "172.16.138.68";
 				int port1 = 42050;
 				int port2 = 25000;
-
-				// Uncomment the following if you are SERVING the music
-				// temp testing to Sam's computer
-				//is = new InitiatingServer(samIP, port2, this);
-				//is.initiate();
-
-				// Uncomment the following if you are RECEVING the music
-				// temp testing to Jesse
-				InitiatingClient ic = new InitiatingClient(stephenIP, port1);
-				ic.initiate();
-
 			}
+		} else if(e.getSource() == window.streamButton) {
+			ipFrame = new JFrame("Select IP Addresses");
+			JLabel l1, l2;
+			submit = new JButton("Submit");
+			JPanel j = new JPanel();
+			JPanel x = new JPanel();
+			l1 = new JLabel("IP 1:");
+			l2 = new JLabel("IP 2:");
+			ip1 = new JTextField(10);
+			ip2 = new JTextField(10);
+			x.setLayout(new BorderLayout());
+			j.add(l1);
+			j.add(ip1);
+			j.add(l2);
+			j.add(ip2);
+			j.add(submit);
+			x.add(j, BorderLayout.CENTER);
+			x.add(submit, BorderLayout.SOUTH);
+			ipFrame.add(x);
+			ipFrame.setSize(400,200);
+			ipFrame.setVisible(true);
+			submit.addActionListener(this);
+			ip1.addActionListener(this);
+			ip2.addActionListener(this);
+		} else if(e.getSource() == submit) {
+			ipFrame.setVisible(false);
+			String firstIP = ip1.getText().trim();
+			String secondIP = ip2.getText().trim();
+			streaming = true;
 		}
 	}
 
@@ -111,6 +128,13 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 					}
 				} else {
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
+					if(streaming) {
+						InitiatingServer is = new InitiatingServer("172.16.150.122", 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath, this);
+						is.initiate();
+					} else {
+						InitiatingServer is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.songListModel.getElementAt(index).filePath, this);
+						is.initiate();
+					}
 				}
 			}
 		} else {

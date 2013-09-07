@@ -22,7 +22,7 @@ import javax.swing.DefaultListModel;
 public class Window extends JFrame {
 	
 	Map<String, Object> eventSources;
-	JButton importButton;
+	JButton importButton, streamButton;
 	JTextField displaySong, friendIPField;
 	JLabel myIPLabel, friendIPLabel, songsLabel, queueLabel;
 	DefaultListModel<SongTuple<String, String>> songListModel, queueModel;
@@ -44,7 +44,7 @@ public class Window extends JFrame {
 		queueList = new JList<SongTuple<String, String>>(queueModel);
 		queueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		friendIPField = new JTextField(10);
-		friendIPLabel = new JLabel("Stream to IP Address:");
+		streamButton = new JButton("Stream to IP Addresses...");
 		String ip = "Error";
 		try {
 			ip = InetAddress.getLocalHost().getHostAddress();
@@ -58,7 +58,6 @@ public class Window extends JFrame {
 		add(bottomPanel, BorderLayout.SOUTH);
 		JPanel topPanel = new JPanel();
 		add(topPanel, BorderLayout.NORTH);
-		JPanel topRightPanel = new JPanel();
 		
 		//Create a split pane with the two scroll panes in it. Create the column headers.
 		JScrollPane songListPane = new JScrollPane(songList);
@@ -78,9 +77,7 @@ public class Window extends JFrame {
 		add(splitPane, BorderLayout.CENTER);
 		
 		topPanel.add(myIPLabel);
-		topPanel.add(topRightPanel);
-		topRightPanel.add(friendIPLabel);
-		topRightPanel.add(friendIPField);
+		topPanel.add(streamButton);
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);
@@ -93,6 +90,7 @@ public class Window extends JFrame {
 		eventListener = listener;
 		
 		//Register event listeners, add components to list of event sources to be passed to GUIEventListener
+		streamButton.addActionListener(eventListener);
 		importButton.addActionListener(eventListener);
 		displaySong.addActionListener(eventListener);
 		songList.addMouseListener(eventListener);

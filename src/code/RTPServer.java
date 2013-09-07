@@ -309,7 +309,6 @@ public class RTPServer implements ControllerListener, Runnable {
 			while (!configured) {
 				try {
 					Thread.currentThread().sleep(100L);
-					;
 				} catch (InterruptedException e) {
 					// ignore
 				}
