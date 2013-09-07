@@ -6,6 +6,7 @@ import javax.media.rtp.rtcp.*;
 import javax.media.*;
 import javax.media.protocol.*;
 import javax.media.control.*;
+import javax.media.format.AudioFormat;
 
 public class RTPServer implements ControllerListener, Runnable {
 	private boolean realized = false;
