@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.util.Map;
 
@@ -36,19 +37,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				String folderDir = fileChooser.getSelectedFile().toString();
 				((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
 				
-				// TODO make this recursive so it will take in all song files even within subdirectories
-				File[] files = new File(folderDir).listFiles(new FilenameFilter() {
-					public boolean accept(File dir, String filename) {
-						return filename.endsWith(".wav") || filename.endsWith(".mp3");
-					}
-				});
-
-				for (File file : files) {
-					if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
-						window.songListModel.remove(0);
-					window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath()));
-				}
-
+				importMusic(folderDir);
 
 				// TODO have the top of queue be playing
 				// TODO song list and queue are synced between comps
@@ -83,7 +72,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 
 	@Override
 	public void controllerUpdate(ControllerEvent arg0) {
-
+		
 	}
 
 	@Override
@@ -100,18 +89,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 						String folderDir = fileChooser.getSelectedFile().toString();
 						((JTextField) (eventSources.get("displaySong"))).setText(folderDir);
 						
-						// TODO make this recursive so it will take in all song files even within subdirectories
-						File[] files = new File(folderDir).listFiles(new FilenameFilter() {
-							public boolean accept(File dir, String filename) {
-								return filename.endsWith(".wav") || filename.endsWith(".mp3");
-							}
-						});
-
-						for (File file : files) {
-							if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
-								window.songListModel.remove(0);
-							window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath()));
-						}
+						importMusic(folderDir);
 					}
 				} else {
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
@@ -127,28 +105,48 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 			}
 		}
 	}
+	
+	public void importMusic(String folderDir) {
+		File[] files = new File(folderDir).listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String filename) {
+				return filename.endsWith(".wav") || filename.endsWith(".mp3");
+			}
+		});
+
+		for (File file : files) {
+			if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
+				window.songListModel.remove(0);
+			window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath()));
+		}
+		
+		File[] subdirs = new File(folderDir).listFiles(new FileFilter() {
+			public boolean accept(File file) {
+				return file.isDirectory();
+			}
+		});
+		
+		for (File subdir : subdirs) {
+			importMusic(subdir.getPath());
+		}
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 }
