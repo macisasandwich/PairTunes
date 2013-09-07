@@ -10,8 +10,11 @@ import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.util.Map;
 
+import javax.media.ConfigureCompleteEvent;
 import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
+import javax.media.EndOfMediaEvent;
+import javax.media.RealizeCompleteEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
@@ -20,6 +23,8 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	Map<String, Object> eventSources;
 	Window window;
 	JFileChooser fileChooser = new JFileChooser();
+	InitiatingServer is;
+	InitiatingClient ic;
 
 	public void setWindow(Window w) {
 		this.window = w;
@@ -59,21 +64,33 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 
 				// Uncomment the following if you are SERVING the music
 				// temp testing to Sam's computer
-				InitiatingServer is = new InitiatingServer(samIP, port2);
-				is.initiate();
+				//is = new InitiatingServer(samIP, port2, this);
+				//is.initiate();
 
 				// Uncomment the following if you are RECEVING the music
 				// temp testing to Jesse
-				//InitiatingClient is = new InitiatingClient(jesseIP, port1);
-				//is.initiate();
+				InitiatingClient ic = new InitiatingClient(stephenIP, port1);
+				ic.initiate();
 
 			}
 		}
 	}
 
 	@Override
-	public void controllerUpdate(ControllerEvent arg0) {
-		
+	public void controllerUpdate(ControllerEvent evt) {
+		if (evt instanceof EndOfMediaEvent) {
+			if (is != null) {
+				is.rtps = null;
+				is = null;
+			}
+			
+			if (ic != null) {
+				ic.rtpc = null;
+				ic = null;
+			}
+		} else {
+			// System.out.println(evt.toString());
+		}
 	}
 
 	@Override

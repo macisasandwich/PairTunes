@@ -188,8 +188,9 @@ public class RTPServer implements ControllerListener, Runnable {
 	Processor p;
 	Player pl;
 	MediaLocator src;
+	GUIEventListener GUIEL;
 
-	public RTPServer(String destIP, String song, int port) {
+	public RTPServer(String destIP, String song, int port, GUIEventListener gui) {
 		Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
 		Format input2 = new AudioFormat(AudioFormat.MPEG);
 		Format output = new AudioFormat(AudioFormat.LINEAR);
@@ -200,6 +201,7 @@ public class RTPServer implements ControllerListener, Runnable {
 		        PlugInManager.CODEC);
 		ipAddress = destIP;
 		this.port = port;
+		this.GUIEL = gui;
 		src = new MediaLocator(song);
 
 	}
@@ -292,8 +294,6 @@ public class RTPServer implements ControllerListener, Runnable {
 			realized = true;
 		} else if (evt instanceof ConfigureCompleteEvent) {
 			configured = true;
-		} else if (evt instanceof EndOfMediaEvent) {
-			System.exit(0);
 		} else {
 			// System.out.println(evt.toString());
 		}
@@ -303,6 +303,7 @@ public class RTPServer implements ControllerListener, Runnable {
 
 		try {
 			p = Manager.createProcessor(src);
+			p.addControllerListener(GUIEL);
 			p.addControllerListener(this);
 			p.configure();
 			while (!configured) {

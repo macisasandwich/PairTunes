@@ -16,14 +16,16 @@ public class InitiatingServer{
 	String destinationIP;
 	int port;
 	long offsetTotal = 0, offset;
-	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\IYAZ_-_Replay.aiff";
+	String songAddress = "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\Somewhere I Belong.wav";
 	PrintWriter out;
 	BufferedReader in;
 	RTPServer rtps;
+	GUIEventListener GUIEL;
 	
-	public InitiatingServer(String destinationIP, int port) {
+	public InitiatingServer(String destinationIP, int port, GUIEventListener gui) {
 		this.destinationIP = destinationIP;
 		this.port = port;
+		this.GUIEL = gui;
 	}
 	
 	public void initiate() {
@@ -46,7 +48,7 @@ public class InitiatingServer{
 		}
 		
 		System.out.println("Sync Complete.\nStarting Transmission...");
-		rtps = new RTPServer(destinationIP, songAddress, port);
+		rtps = new RTPServer(destinationIP, songAddress, port, GUIEL);
 		Thread t = new Thread(rtps);
 		t.start();
 		
