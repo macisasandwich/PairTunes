@@ -26,9 +26,9 @@ public class Window extends JFrame {
 	Map<String, Object> eventSources;
 	JButton importButton;
 	JTextField displaySong, friendIPField;
-	JLabel myIPLabel, friendIPLabel;
-	DefaultListModel<String> songListModel;
-	JList<String> songList;
+	JLabel myIPLabel, friendIPLabel, songsLabel, queueLabel;
+	DefaultListModel<String> songListModel, queueModel;
+	JList<String> songList, queueList;
 	GUIEventListener eventListener;
 	
 	public Window(GUIEventListener listener) {
@@ -36,9 +36,14 @@ public class Window extends JFrame {
 		//Set up GUI components
 		importButton = new JButton("Import Folder");
 		displaySong = new JTextField();
+		songsLabel = new JLabel("Songs:");
 		songListModel = new DefaultListModel<String>();
 		songListModel.addElement("<Add some songs!>");
 		songList = new JList<String>(songListModel);
+		songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		queueLabel = new JLabel("Queue:");
+		queueModel = new DefaultListModel<String>();
+		queueList = new JList<String>(queueModel);
 		friendIPField = new JTextField(10);
 		friendIPLabel = new JLabel("Friend IP Address:");
 		String ip = "Error";
@@ -56,8 +61,10 @@ public class Window extends JFrame {
 		add(topPanel, BorderLayout.NORTH);
 		JPanel topRightPanel = new JPanel();
 		
-		songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		add(new JScrollPane(songList), BorderLayout.CENTER);
+		JPanel centerPanel = new JPanel();
+		centerPanel.add(new JScrollPane(songList), BorderLayout.WEST);
+		centerPanel.add(new JScrollPane(queueList), BorderLayout.EAST);
+		add(centerPanel, BorderLayout.CENTER);
 		
 		topPanel.add(myIPLabel);
 		topPanel.add(topRightPanel);
@@ -66,7 +73,7 @@ public class Window extends JFrame {
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
 		bottomPanel.add(importButton, BorderLayout.EAST);
-		setSize(500,500);
+		setSize(1000,500);
 		setVisible(true);
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
