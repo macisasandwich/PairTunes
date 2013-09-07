@@ -25,10 +25,7 @@ public class RTPClient implements Runnable {
 				PlugInManager.CODEC);
 		this.mama = mom;
 		this.port = port;
-
-		// TODO not the port!
-		String srcUrl = "rtp://" + srcIP + ":" + Integer.toString(port)
-				+ "/audio/1";
+		String srcUrl = "rtp://" + srcIP + ":" + Integer.toString(port)	+ "/audio/1";
 		DataSink sink;
 		src = new MediaLocator(srcUrl);
 	}
