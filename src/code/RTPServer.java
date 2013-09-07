@@ -187,6 +187,7 @@ public class RTPServer implements ControllerListener, Runnable {
 	private long offset;
 	private int port;
 	Processor p;
+	Player pl;
 	MediaLocator src;
 	
 	public static void entry(String destIP, String songAddress, long offset, int port) {
@@ -270,20 +271,19 @@ public class RTPServer implements ControllerListener, Runnable {
 			SendStream sendStream;
 			//int port = 42050;
 			SourceDescription srcDesList[];
-			Player pl = Manager.createPlayer(src);
+			pl = Manager.createPlayer(src);
 			
 			localAddr = new SessionAddress(InetAddress.getLocalHost(), port);
 			InetAddress ipAddr = InetAddress.getByName(ipAddress);
 			destAddr = new SessionAddress(ipAddr, port);
 			rtpMgr.initialize(localAddr);
 			rtpMgr.addTarget(destAddr);
-			sendStream = rtpMgr.createSendStream(output, 0);
+			sendStream = rtpMgr.createSendStream(pbds, 0);
 			sendStream.start();
 			System.err
 					.println("Created RTP session: " + ipAddress + " " + port);
 			p.start();
 			//wait(offset);
-			pl.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
