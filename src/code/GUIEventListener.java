@@ -29,13 +29,19 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 	Map<String, Object> eventSources;
 	Window window;
 	JFileChooser fileChooser = new JFileChooser();
+	JFrame ipFrame, ipRFrame;
+	JButton submit, rSubmit;
 	InitiatingServer is;
 	InitiatingClient ic;
-	JFrame ipFrame;
-	JButton submit;
 	JTextField ip1, ip2;
 	boolean streaming = false;
+	boolean playing = false;
+	String firstIP, secondIP, rcvIP;
 
+	public GUIEventListener() {
+		//ic = new InitiatingClient(srcIP, port)
+	}
+	
 	public void setWindow(Window w) {
 		this.window = w;
 		this.eventSources = w.getSources();
@@ -90,11 +96,34 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 			submit.addActionListener(this);
 			ip1.addActionListener(this);
 			ip2.addActionListener(this);
+		} else if(e.getSource() == window.rcvButton) {
+			ipRFrame = new JFrame("Select Partner IP Addresses");
+			JLabel l1;
+			rSubmit = new JButton("Submit");
+			JPanel j = new JPanel();
+			JPanel x = new JPanel();
+			l1 = new JLabel("IP 1:");
+			ip1 = new JTextField(10);
+			x.setLayout(new BorderLayout());
+			j.add(l1);
+			j.add(ip1);
+			j.add(submit);
+			x.add(j, BorderLayout.CENTER);
+			x.add(submit, BorderLayout.SOUTH);
+			ipRFrame.add(x);
+			ipRFrame.setSize(400,200);
+			ipRFrame.setVisible(true);
+			rSubmit.addActionListener(this);
+			ip1.addActionListener(this);
 		} else if (e.getSource() == submit) {
 			ipFrame.setVisible(false);
-			String firstIP = ip1.getText().trim();
-			String secondIP = ip2.getText().trim();
+			firstIP = ip1.getText().trim();
+			secondIP = ip2.getText().trim();
 			streaming = true;
+		} else if (e.getSource() == rSubmit) {
+			ipRFrame.setVisible(false);
+			rcvIP = ip1.getText().trim();
+			ic = new InitiatingClient(rcvIP, 42050);
 		}
 	}
 
@@ -144,25 +173,16 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 						importMusic(folderDir);
 					}
 				} else {
-					window.queueModel.addElement(window.songListModel
-							.getElementAt(index));
-					if (streaming) {
-						InitiatingServer is = new InitiatingServer(
-								"172.16.150.122", 42050, true,
-								"file:///"
-										+ window.songListModel
-												.getElementAt(index).filePath,
-								this);
+
+					window.queueModel.addElement(window.songListModel.getElementAt(index));
+					if(streaming) {
+						is = new InitiatingServer(firstIP, 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath, this);
 						is.initiate();
 					} else {
-						InitiatingServer is = new InitiatingServer("127.0.0.1",
-								42050, false,
-								"file:///"
-										+ window.songListModel
-												.getElementAt(index).filePath,
-								this);
+						is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.songListModel.getElementAt(index).filePath, this);
 						is.initiate();
 					}
+					playing = true;
 				}
 			}
 		} else {
