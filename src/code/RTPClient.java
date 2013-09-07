@@ -7,13 +7,6 @@ public class RTPClient implements ControllerListener, Runnable {
 
 	Player p;
 	MediaLocator src;
-
-	public static void main(String[] args) {
-		//TODO wat
-		RTPClient rtp = new RTPClient("192.168.1.100");
-		Thread t = new Thread(rtp);
-		t.start();
-	}
 	
 	public static void entry(String srcIP) {
 		RTPClient rtp = new RTPClient(srcIP);
