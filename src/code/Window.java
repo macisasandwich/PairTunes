@@ -13,21 +13,21 @@ import javax.swing.JTextField;
 public class Window extends JFrame {
 	
 	Map<String, Object> eventSources;
-	JButton loadButton;
+	JButton importButton;
 	JTextField displaySong;
 	GUIEventListener eventListener;
 	
 	public Window(GUIEventListener listener) {
 		
 		//Set up GUI components
-		loadButton = new JButton("Load...");
+		importButton = new JButton("Import...");
 		displaySong = new JTextField();
 		setLayout(new BorderLayout());
 		JPanel bottomPanel = new JPanel();
 		add(bottomPanel, BorderLayout.SOUTH);
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(displaySong, BorderLayout.CENTER);
-		bottomPanel.add(loadButton, BorderLayout.EAST);
+		bottomPanel.add(importButton, BorderLayout.EAST);
 		setSize(500,500);
 		setVisible(true);
 		setTitle("PairTunes");
@@ -37,10 +37,10 @@ public class Window extends JFrame {
 		eventListener = listener;
 		
 		//Register event listeners, add components to list of event sources to be passed to GUIEventListener
-		loadButton.addActionListener(eventListener);
+		importButton.addActionListener(eventListener);
 		displaySong.addActionListener(eventListener);
 		eventSources = new HashMap<String, Object>();
-		eventSources.put("loadButton", loadButton);
+		eventSources.put("loadButton", importButton);
 		eventSources.put("displaySong", displaySong);
 	}
 	
