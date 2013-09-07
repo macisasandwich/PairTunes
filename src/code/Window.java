@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
@@ -56,7 +57,7 @@ public class Window extends JFrame {
 		JPanel topRightPanel = new JPanel();
 		
 		songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		add(songList, BorderLayout.CENTER);
+		add(new JScrollPane(songList), BorderLayout.CENTER);
 		
 		topPanel.add(myIPLabel);
 		topPanel.add(topRightPanel);

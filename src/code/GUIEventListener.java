@@ -50,8 +50,6 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 	            		window.songListModel.remove(0);
 	            	window.songListModel.addElement(file.getName());
 	            }
-	            
-	            //TODO make this scroll
 
 //	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
 //	            RTPClient.entry("172.16.150.122");
