@@ -112,10 +112,10 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				} else {
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
 					if(streaming) {
-						InitiatingServer is = new InitiatingServer("172.16.150.122", 42050, streaming,"file:///"+window.songListModel.getElementAt(index).filePath);
+						InitiatingServer is = new InitiatingServer("172.16.150.122", 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath);
 						is.initiate();
 					} else {
-						InitiatingServer is = new InitiatingServer("127.0.0.1", 42050, streaming,"file:///"+window.songListModel.getElementAt(index).filePath);
+						InitiatingServer is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.songListModel.getElementAt(index).filePath);
 						is.initiate();
 					}
 				}

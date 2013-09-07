@@ -51,6 +51,7 @@ public class InitiatingServer {
 			client = new Socket(InetAddress.getByName(destinationIP), port);
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			System.out.println("Connection accepted. Waiting for Sync...");
 			
 			if (!in.readLine().equals("sync")) {
 				System.out.println("Bad Server... Exiting...");
