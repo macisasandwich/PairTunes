@@ -54,9 +54,7 @@ public class GUIEventListener implements ActionListener, ControllerListener {
 //	            RTPServer.entry("172.16.138.68", "file:///C:\\Users\\JESSE\\Desktop\\Developer\\GitHub\\PairTunes\\src\\res\\17 Jeremy Soule - Secunda.wav");
 //	            RTPClient.entry("172.16.150.122");
 	            
-//	            InitiaterClient.startComm();
-	            InitiaterClient i = new InitiaterClient("172.16.200.239", 42050);
-	            i.initiate();
+	            InitiaterServer.startComm();
 	        }
 		}
 	}

@@ -19,12 +19,12 @@ public class InitiaterServer {
 			client = server.accept();
 			PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			long timeDiff;			
+/*			long timeDiff;			
 			
 			for (int i = 0; i <= 3; i++) {
 				timeDiff = new GregorianCalendar().getTimeInMillis() - Long.parseLong(in.readLine());
 				out.println(timeDiff);
-			}
+			}*/
 			
 			System.out.println("Handshake received from server. Socket established!");
 			RTPClient.entry("172.16.150.122");
