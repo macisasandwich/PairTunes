@@ -20,11 +20,13 @@ public class InitiatingServer {
 	PrintWriter out;
 	BufferedReader in;
 	RTPServer rtps;
+	GUIEventListener GUIEL;
 	boolean stream;
 	
-	public InitiatingServer(String destinationIP, int port, boolean stream, String song) {
+	public InitiatingServer(String destinationIP, int port, boolean stream, String song, GUIEventListener gui) {
 		this.destinationIP = destinationIP;
 		this.port = port;
+		this.GUIEL = gui;
 		this.stream = stream;
 		songAddress = song;
 	}
@@ -38,7 +40,7 @@ public class InitiatingServer {
 	}
 	
 	public void initiateSelf() {
-		rtps = new RTPServer(destinationIP, songAddress, port);
+		rtps = new RTPServer(destinationIP, songAddress, port, GUIEL);
 		Thread t = new Thread(rtps);
 		t.start();
 		rtps.play();
@@ -65,7 +67,7 @@ public class InitiatingServer {
 		}
 		
 		System.out.println("Sync Complete.\nStarting Transmission...");
-		rtps = new RTPServer(destinationIP, songAddress, port);
+		rtps = new RTPServer(destinationIP, songAddress, port, GUIEL);
 		Thread t = new Thread(rtps);
 		t.start();
 		

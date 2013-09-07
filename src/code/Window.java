@@ -22,7 +22,7 @@ import javax.swing.DefaultListModel;
 public class Window extends JFrame {
 	
 	Map<String, Object> eventSources;
-	JButton importButton, streamButton, rcvButton;
+	JButton importButton, streamButton, rcvButton, playPauseButton, stopButton, backButton, forwardButton;
 	JTextField displaySong, friendIPField;
 	JLabel myIPLabel, friendIPLabel, songsLabel, queueLabel;
 	DefaultListModel<SongTuple<String, String>> songListModel, queueModel;
@@ -34,6 +34,12 @@ public class Window extends JFrame {
 		//Set up GUI components
 		importButton = new JButton("Import Folder");
 		displaySong = new JTextField();
+		playPauseButton = new JButton("Play/Pause");
+		stopButton = new JButton("Stop");
+		backButton = new JButton("Back");
+		forwardButton = new JButton("Forward");
+		
+		//Middle scrolling panel stuff
 		songsLabel = new JLabel("Songs:");
 		songListModel = new DefaultListModel<SongTuple<String, String>>();
 		songListModel.addElement(new SongTuple<String, String>("<Add some songs!>", "N/A"));
@@ -43,6 +49,8 @@ public class Window extends JFrame {
 		queueModel = new DefaultListModel<SongTuple<String, String>>();
 		queueList = new JList<SongTuple<String, String>>(queueModel);
 		queueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		//IP stuff
 		friendIPField = new JTextField(10);
 		streamButton = new JButton("Stream to IP Addresses...");
 		rcvButton = new JButton("Receive from IP Addresses...");
@@ -58,7 +66,20 @@ public class Window extends JFrame {
 		JPanel bottomPanel = new JPanel();
 		add(bottomPanel, BorderLayout.SOUTH);
 		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BorderLayout());
 		add(topPanel, BorderLayout.NORTH);
+		
+		JPanel topLeft = new JPanel();
+		topPanel.add(topLeft, BorderLayout.WEST);
+		topLeft.add(myIPLabel);
+		topLeft.add(streamButton);
+		
+		JPanel topRight = new JPanel();
+		topPanel.add(topRight, BorderLayout.EAST);
+		topRight.add(playPauseButton);
+		topRight.add(stopButton);
+		topRight.add(backButton);
+		topRight.add(forwardButton);
 		
 		//Create a split pane with the two scroll panes in it. Create the column headers.
 		JScrollPane songListPane = new JScrollPane(songList);

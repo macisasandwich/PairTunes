@@ -12,8 +12,11 @@ import java.io.FilenameFilter;
 import java.net.InetAddress;
 import java.util.Map;
 
+import javax.media.ConfigureCompleteEvent;
 import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
+import javax.media.EndOfMediaEvent;
+import javax.media.RealizeCompleteEvent;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -28,10 +31,11 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 	JFileChooser fileChooser = new JFileChooser();
 	JFrame ipFrame, ipRFrame;
 	JButton submit, rSubmit;
+	InitiatingServer is;
+	InitiatingClient ic;
 	JTextField ip1, ip2;
 	boolean streaming = false;
 	boolean playing = false;
-	InitiatingClient ic;
 	String firstIP, secondIP, rcvIP;
 
 	public GUIEventListener() {
@@ -114,13 +118,25 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		} else if (e.getSource() == rSubmit) {
 			ipRFrame.setVisible(false);
 			rcvIP = ip1.getText().trim();
-			InitiatingClient ic = new InitiatingClient(rcvIP, 42050);
+			ic = new InitiatingClient(rcvIP, 42050);
 		}
 	}
 
 	@Override
-	public void controllerUpdate(ControllerEvent arg0) {
-		
+	public void controllerUpdate(ControllerEvent evt) {
+		if (evt instanceof EndOfMediaEvent) {
+			if (is != null) {
+				is.rtps = null;
+				is = null;
+			}
+			
+			if (ic != null) {
+				ic.rtpc = null;
+				ic = null;
+			}
+		} else {
+			// System.out.println(evt.toString());
+		}
 	}
 
 	@Override
@@ -142,10 +158,10 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 				} else {
 					window.queueModel.addElement(window.songListModel.getElementAt(index));
 					if(streaming) {
-						InitiatingServer is = new InitiatingServer(firstIP, 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath);
+						is = new InitiatingServer(firstIP, 42050, true,"file:///"+window.songListModel.getElementAt(index).filePath, this);
 						is.initiate();
 					} else {
-						InitiatingServer is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.songListModel.getElementAt(index).filePath);
+						is = new InitiatingServer("127.0.0.1", 42050, false,"file:///"+window.songListModel.getElementAt(index).filePath, this);
 						is.initiate();
 					}
 					playing = true;
