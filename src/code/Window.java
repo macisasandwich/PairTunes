@@ -61,6 +61,8 @@ public class Window extends JFrame {
 		setTitle("PairTunes");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		songList.setListData(new String[] {"oogla boogla"});
+		
 		//Set event Listener
 		eventListener = listener;
 		
