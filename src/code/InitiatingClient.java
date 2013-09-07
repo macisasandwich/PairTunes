@@ -57,7 +57,7 @@ public class InitiatingClient implements ControllerListener {
 		Thread t = new Thread(rtpc);
 		t.start();
 		try {
-			t.sleep(networkDelay * 8/9);
+			t.sleep(networkDelay * 7/8);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		

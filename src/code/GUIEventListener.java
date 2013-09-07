@@ -59,7 +59,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 
 				// Uncomment the following if you are SERVING the music
 				// temp testing to Sam's computer
-				InitiatingServer is = new InitiatingServer(stephenIP, port1);
+				InitiatingServer is = new InitiatingServer(samIP, port2);
 				is.initiate();
 
 				// Uncomment the following if you are RECEVING the music
