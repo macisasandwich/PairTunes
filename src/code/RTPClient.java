@@ -24,7 +24,6 @@ public class RTPClient implements Runnable {
 		        new Format[]{input1, input2},
 		        new Format[]{output},
 		        PlugInManager.CODEC);
-		
 		this.mama = mom;
 		
 		//TODO not the port!
@@ -44,14 +43,4 @@ public class RTPClient implements Runnable {
 		}
 	}
 
-	/*public synchronized void controllerUpdate(ControllerEvent evt) {
-		if (evt instanceof EndOfMediaEvent) {
-			System.exit(0);
-		} else if (evt instanceof PrefetchCompleteEvent) {
-			p.start();
-			//r.pl.start();
-		} else {
-			System.out.println(evt.toString());
-		}
-	}*/
 }
