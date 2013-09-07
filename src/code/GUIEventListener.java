@@ -9,13 +9,10 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
-import java.net.InetAddress;
 import java.util.Map;
-import javax.media.ConfigureCompleteEvent;
 import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
 import javax.media.EndOfMediaEvent;
-import javax.media.RealizeCompleteEvent;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -37,6 +34,12 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 	boolean streaming = false;
 	boolean playing = false;
 	String firstIP, secondIP, rcvIP;
+	
+	public final String samIP = "172.16.200.239";
+	public final String jesseIP = "172.16.150.122";
+	public final String stephenIP = "172.16.138.68";
+	public final int port1 = 42050;
+	public final int port2 = 25000;
 
 	public GUIEventListener() {
 		//ic = new InitiatingClient(srcIP, port)
@@ -64,12 +67,6 @@ public class GUIEventListener implements ActionListener, ControllerListener,
 						.setText(folderDir);
 
 				importMusic(folderDir);
-
-				String samIP = "172.16.200.239";
-				String jesseIP = "172.16.150.122";
-				String stephenIP = "172.16.138.68";
-				int port1 = 42050;
-				int port2 = 25000;
 			}
 
 		} else if (e.getSource() == window.streamButton) {
