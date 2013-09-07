@@ -2,10 +2,6 @@ package code;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -21,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListModel;
-import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame {
