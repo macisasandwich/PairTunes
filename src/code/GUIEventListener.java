@@ -116,7 +116,7 @@ public class GUIEventListener implements ActionListener, ControllerListener, Mou
 		for (File file : files) {
 			if (window.songListModel.getElementAt(0).songName.equals("<Add some songs!>"))
 				window.songListModel.remove(0);
-			window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getPath()));
+			window.songListModel.addElement(new SongTuple<String, String>(file.getName(), file.getAbsolutePath()));
 		}
 		
 		File[] subdirs = new File(folderDir).listFiles(new FileFilter() {
